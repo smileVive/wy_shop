@@ -1,0 +1,60 @@
+.mui-slider .mui-slider-group .mui-slider-item {
+	height: auto;
+}
+body{
+	padding-top: 44px;
+	padding-bottom: 50px;
+	font-size: 12px;
+}
+
+
+a:focus {outline:none}
+.star {
+    display: inline-block;
+    overflow: hidden;
+    background: url(../img/star.png) no-repeat;
+}
+
+.star-1 {
+    background-position: 0 -100px;}
+.star-2 {
+    background-position: 0 -125px;
+}
+.star-3 {
+    background-position: 0 -150px;
+}
+.star-4 {
+    background-position: 0 -175px;
+}
+.star-5 {
+    background-position: 0 -200px;
+}
+
+.mui-table-view .mui-media-object {
+    line-height: 52px;
+    width: 70px;
+	max-width: 70px;
+    height: 52px;
+}
+
+.mui-col{
+    margin-right: -4px;
+    display: inline-block;
+}
+
+.mui-numbox {
+
+
+}
+.mui-numbox [class*=mui-numbox-btn] {
+}
+
+.menu .mui-table-view-cell {
+	padding-right:0;
+	background: #f5f5f5;
+}
+
+.menu .mui-table-view-cell.active {
+	background: none;
+	color: #fa8072;
+}
