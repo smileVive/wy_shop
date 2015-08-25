@@ -16,7 +16,7 @@ class CreateGoodsTable extends Migration
 	             $table->increments('id');
 	             $table->string('name');
 	             $table->string('sn');
-				 
+
 	             $table->decimal('price', 6, 2);
 	             $table->integer('type_id');
 	             $table->text('img');
@@ -41,6 +41,6 @@ class CreateGoodsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('goods');
     }
 }

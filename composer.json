@@ -6,7 +6,9 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+		"zizaco/entrust": "dev-laravel-5",
+        "overtrue/laravel-lang": "1.0.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -47,5 +49,9 @@
     },
     "config": {
         "preferred-install": "dist"
-    }
+    },
+	"repositories": [
+        {"type": "composer", "url": "http://packagist.phpcomposer.com"},
+        {"packagist": false}
+    ]
 }
