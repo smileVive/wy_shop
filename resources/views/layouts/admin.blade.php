@@ -68,7 +68,7 @@
           </ul>
         </li>
         <li><a href="admin-table.html"><span class="am-icon-table"></span> 表格</a></li>
-        <li><a href="admin-form.html"><span class="am-icon-pencil-square-o"></span> 表单</a></li>
+        <li><a href="{{ route('admin.good.create') }}"><span class="am-icon-pencil-square-o"></span> 表单</a></li>
         <li><a href="#"><span class="am-icon-sign-out"></span> 注销</a></li>
       </ul>
 
