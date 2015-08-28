@@ -13,6 +13,9 @@ class AuthController extends Controller
     //登陆成功跳转页
     protected $redirectPath = '/admin';
 
+    //退出登录，跳转页面
+    protected $redirectAfterLogout = 'auth/login';
+
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -65,4 +68,5 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
 }
