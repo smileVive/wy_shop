@@ -73,7 +73,7 @@
                             <td>
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
-                                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="{{ route('admin.type.{type_id}.attribute.edit', $type_id) }}">
+                                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="{{ route('admin.type.{type_id}.attribute.edit', [$type_id, $attribute->id]) }}">
                                             <span class="am-icon-pencil-square-o"></span> 编辑
                                         </a>
                                         <a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" href="{{ route('admin.type.{type_id}.attribute.destroy', [$type_id, $attribute->id]) }}" data-method="delete" data-token="{{csrf_token()}}" data-confirm="确定删除吗？">
@@ -84,8 +84,6 @@
                             </td>
                         </tr>
                         @endforeach
-
-
 
                     </tbody>
                 </table>
