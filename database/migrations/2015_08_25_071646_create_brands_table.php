@@ -12,15 +12,16 @@ class CreateBrandsTable extends Migration
      */
     public function up()
     {
-	    Schema::create('brands', function (Blueprint $table) {
-	             $table->increments('id');
-	             $table->string('name');
-	             $table->text('desc');
-	             $table->string('url');
-	             $table->string('logo');
-	             $table->smallInteger('sort_order');
-	             $table->timestamps();
-	         });
+        Schema::create('brands', function (Blueprint $table) {
+             $table->increments('id');
+             $table->string('name');
+             $table->text('desc');
+             $table->string('url');
+             $table->string('logo');
+             $table->smallInteger('sort_order')->default('99');
+             $table->boolean('is_show')->default('true');
+             $table->timestamps();
+        });
     }
 
     /**

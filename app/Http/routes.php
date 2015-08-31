@@ -34,10 +34,28 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 
+//上传
+Route::post('upload', 'UploadController@store');
 
-
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth'], function(){
+//后台  , 'middleware' => 'auth'
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
     Route::get('/', 'IndexController@index');
 
+
+	//商品品牌，除去show方法
+	Route::resource('brand', 'BrandController', ['except' => ['show']]);
+
+	//商品类型
+	Route::resource('type', 'TypeController', ['except' => ['show']]);
+
+	//商品属性，需要加入商品类型的id
+	Route::group(['prefix' => 'type/{type_id}'], function(){
+		Route::resource('attribute', 'AttributeController', ['except' => ['show']]);
+	});
+
+
+
 	Route::resource('good', 'GoodController');
+
+
 });
