@@ -16,7 +16,8 @@ class UploadController extends Controller
         if ($request->hasFile('Filedata') and $request->file('Filedata')->isValid()) {
 
             //上传文件夹，如果不存在，建立文件夹
-            $path = getcwd().'/uploads/'.date("Y_m");
+            $date = date("Y_m");
+            $path = getcwd().'/uploads/'.$date;
             if(!is_dir($path)) {
                 Storage::makeDirectory($path);
             }
@@ -28,7 +29,7 @@ class UploadController extends Controller
             $request->file('Filedata')->move($path, $file_name);
 
             //返回新文件名
-            return $file_name;
+            return '/uploads/'.$date.'/'.$file_name;
         }
     }
 }

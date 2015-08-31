@@ -15,14 +15,17 @@
             </div>
         </div>
 
-        <div class="am-u-sm-12 am-u-md-3">
-            <div class="am-input-group am-input-group-sm">
-                <input type="text" class="am-form-field">
-                <span class="am-input-group-btn">
-                    <button class="am-btn am-btn-default" type="button">搜索</button>
-                </span>
+        <form class="" action="/admin/brand/search" method="get">
+            <div class="am-u-sm-12 am-u-md-3">
+                <div class="am-input-group am-input-group-sm">
+                    <input type="text" class="am-form-field" name="keyword">
+                    <span class="am-input-group-btn">
+                        <button class="am-btn am-btn-default" type="submit">搜索</button>
+                    </span>
+                </div>
             </div>
-        </div>
+        </form>
+
     </div>
 
     <div class="am-g">
@@ -45,11 +48,11 @@
 
                         @foreach($brands as $brand)
                         <tr>
-                            <td>{{ $brand->id }}</td>
+                            <td class="brand_id">{{ $brand->id }}</td>
                             <td>{{ $brand->name }}</td>
                             <td><a href="http://{{ $brand->url }}" target="_blank">{{ $brand->url }}</a></td>
                             <td class="am-hide-sm-only">{{ $brand->desc }}</td>
-                            <td class="am-hide-sm-only">{{ $brand->sort_order }}</td>
+                            <td class="am-hide-sm-only sort_order" contenteditable="true">{{ $brand->sort_order }}</td>
                             <td class="am-hide-sm-only">
                                 @if($brand->is_show == true)
                                     <span class="am-icon-check"></span>
@@ -72,8 +75,6 @@
                         </tr>
                         @endforeach
 
-
-
                     </tbody>
                 </table>
 
@@ -88,4 +89,29 @@
     </div>
 
 </div>
+@stop
+
+@section('js')
+<script type="text/javascript">
+    $(function(){
+        $(".sort_order").blur(function(){
+            var data = {
+                sort_order : $(this).text(),
+                id : $(this).siblings(".brand_id").text()
+            }
+
+            $.ajax({
+                type: "PATCH",
+                url: "/admin/brand/sort",
+                data : data,
+                dataType: "html",
+                // success : function(data){
+                    // console.log(data);
+                    // location.href=location.href;
+                // }
+            });
+
+        })
+    })
+</script>
 @stop

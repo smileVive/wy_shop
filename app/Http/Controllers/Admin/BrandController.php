@@ -48,4 +48,20 @@ class BrandController extends Controller
         Brand::destroy($id);
         return back();
     }
+
+
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword."%";
+        $brands = Brand::orderBy('sort_order')->where('name', 'like', $keyword)->paginate(config('wyshop.page_size'));
+
+        return view('admin.brand.index', ['brands' => $brands]);
+    }
+
+    public function sort(Request $request)
+    {
+        $brand = Brand::find($request->id);
+        $brand->sort_order = $request->sort_order;
+        $brand->save();
+    }
 }

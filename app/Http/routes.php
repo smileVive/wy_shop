@@ -43,6 +43,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
 
 
 	//商品品牌，除去show方法
+	Route::group(['prefix' => 'brand'], function(){
+		Route::get('/search', 'BrandController@search');
+		Route::patch('/sort', 'BrandController@sort');
+	});
 	Route::resource('brand', 'BrandController', ['except' => ['show']]);
 
 	//商品类型
