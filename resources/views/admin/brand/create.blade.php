@@ -40,12 +40,13 @@
             <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
                 <div class="am-form-group am-form-file">
                     <button type="button" class="am-btn am-btn-success am-btn-sm">
-                        <i class="am-icon-cloud-upload"></i> 选择要上传的logo
+                        <i class="am-icon-cloud-upload" id="loading"></i> 选择要上传的logo
                     </button>
                     <input id="doc-form-file" type="file" multipleaa>
                     <input type="hidden" name="logo" value="" id="logo">
                 </div>
                 <div id="file-list"></div>
+                <img src="" alt="" id="brand_logo_img"/>
             </div>
         </div>
 
@@ -90,31 +91,5 @@
 
 @section('js')
 <script src="{{ asset('js/jquery.html5-fileupload.js') }}"></script>
-
-<script>
-$(function() {
-    $('#doc-form-file').on('change', function() {
-        var fileNames = '';
-        $.each(this.files, function() {
-            fileNames += '<span class="am-badge">' + this.name + '</span> ';
-        });
-        $('#file-list').html(fileNames);
-    });
-
-    var opts = {
-        url: "/upload",
-        type: "POST",
-        beforeSend: function(){
-
-        },
-        success : function (result, status, xhr){
-            $('#logo').val(result);
-        },
-        error : function(result, status, errorThrown){
-            alert(errorThrown)
-        }
-    }
-    $('#doc-form-file').fileUpload(opts);
-});
-</script>
+<script src="{{ asset('js/app.js') }}"></script>
 @stop

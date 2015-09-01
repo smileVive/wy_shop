@@ -11,6 +11,9 @@
                     <a class="am-btn am-btn-default" href="{{ route('admin.type.{type_id}.attribute.create', $type_id) }}">
                         <span class="am-icon-plus"></span> 新增
                     </a>
+                    <button type="button" class="am-btn am-btn-default" id="del_all">
+                        <span class="am-icon-trash-o"></span> 删除
+                    </button>
                 </div>
             </div>
         </div>
@@ -37,10 +40,14 @@
 
     <div class="am-g">
         <div class="am-u-sm-12">
-            <form class="am-form">
+            <form class="am-form" action="{{ route('admin.type.{type_id}.attribute.del_all', $type_id) }}" method="post">
+                {!! csrf_field() !!}
+                {!! method_field('delete') !!}
+
                 <table class="am-table am-table-striped am-table-hover table-main">
                     <thead>
                         <tr>
+                            <th class="table-check"><input type="checkbox" id="check_all"/></th>
                             <th class="table-id">编号</th>
                             <th class="table-title">属性名称</th>
                             <th class="table-type">商品类型</th>
@@ -53,6 +60,7 @@
                     <tbody>
                         @foreach($attributes as $attribute)
                         <tr>
+                            <td><input type="checkbox" name="del_all[]" value="{{ $attribute->id }}"/></td>
                             <td>{{ $attribute->id }}</td>
                             <td>{{ $attribute->name }}</td>
                             <td>{{ $attribute->type->name }}</td>
@@ -110,6 +118,28 @@
             var url = '/admin/type/'+type_id+'/attribute';
             location.href = url;
         })
+
+        //全选
+        $("#check_all").click(function(){
+            $(':checkbox').prop("checked", this.checked );
+        })
+
+        //多选删除
+        $("#del_all").click(function(){
+            var del_all = $(".am-form").serialize();
+            $.ajax({
+                type: "DELETE",
+                url: "/admin/type/{{$type_id}}/del_all ",
+                data : del_all,
+                dataType: "json",
+                success : function(data){
+                    // console.log(data);
+                    location.href=location.href;
+                }
+            });
+            return false;
+        })
+
     })
 </script>
 @stop

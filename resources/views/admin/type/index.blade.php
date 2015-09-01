@@ -44,7 +44,7 @@
                         <tr>
                             <td>{{ $type->id }}</td>
                             <td>{{ $type->name }}</td>
-                            <td>{{$type->attributes->count()}}</td>
+                            <td>{{ $type->attributes->count() }}</td>
                             <td>
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">

@@ -35,3 +35,11 @@
 .am-btn-default {
     background: none;
 }
+.brand_logo img {
+    width: 70px;
+    height: 60px;
+}
+
+#brand_logo_img {
+    max-height: 80px;
+}

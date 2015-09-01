@@ -36,6 +36,7 @@
                         <tr>
                             <th class="table-id">编号</th>
                             <th class="table-title">品牌名称</th>
+                            <th>品牌LOGO</th>
                             <th class="table-type">品牌网址</th>
                             <th class="table-author am-hide-sm-only">品牌描述</th>
                             <th class="table-date am-hide-sm-only">排序</th>
@@ -50,6 +51,7 @@
                         <tr>
                             <td class="brand_id">{{ $brand->id }}</td>
                             <td>{{ $brand->name }}</td>
+                            <td class="brand_logo"><img src="{{ $brand->logo }}" alt="" /></td>
                             <td><a href="http://{{ $brand->url }}" target="_blank">{{ $brand->url }}</a></td>
                             <td class="am-hide-sm-only">{{ $brand->desc }}</td>
                             <td class="am-hide-sm-only sort_order" contenteditable="true">{{ $brand->sort_order }}</td>
@@ -106,8 +108,8 @@
                 data : data,
                 dataType: "html",
                 // success : function(data){
-                    // console.log(data);
-                    // location.href=location.href;
+                //     // console.log(data);
+                //     location.href=location.href;
                 // }
             });
 

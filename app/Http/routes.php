@@ -54,12 +54,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
 
 	//商品属性，需要加入商品类型的id
 	Route::group(['prefix' => 'type/{type_id}'], function(){
+		Route:delete('del_all', [
+			'as' => 'admin.type.{type_id}.attribute.del_all', 'uses' =>'AttributeController@del_all'
+		]);
 		Route::resource('attribute', 'AttributeController', ['except' => ['show']]);
 	});
 
-
-
 	Route::resource('good', 'GoodController');
-
-
 });

@@ -54,4 +54,9 @@ class AttributeController extends Controller
         return back();
     }
 
+    public function del_all(Request $request, $type_id)
+    {
+        // return $request->all();
+        Attribute::destroy($request->del_all);
+    }
 }
