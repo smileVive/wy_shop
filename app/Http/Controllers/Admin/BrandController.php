@@ -11,7 +11,7 @@ use App\Models\Brand;
 class BrandController extends Controller
 {
     //品牌列表
-    public function index()
+    public function index(Request $request)
     {
         $brands = Brand::orderBy('sort_order')->paginate(config('wyshop.page_size'));
         return view('admin.brand.index', ['brands' => $brands]);

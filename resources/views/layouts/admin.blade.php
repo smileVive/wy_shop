@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="{{ asset('amaze/css/amazeui.min.css') }}"/>
   <link rel="stylesheet" href="{{ asset('amaze/css/admin.css') }}">
   <link rel="stylesheet" href="{{ asset('css/wyshop.css') }}">
+  <link rel='stylesheet' href='{{ asset('NProgress/nprogress.css') }}'/>
+
 
   @yield('css')
 
@@ -117,13 +119,18 @@
 <script src="{{ asset('amaze/js/amazeui.min.js') }}"></script>
 <script src="{{ asset('amaze/js/app.js') }}"></script>
 <script src="{{ asset('js/laravel.js') }}"></script>
+<script src="{{ asset('NProgress/nprogress.js') }}"></script>
+
 
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+NProgress.start();
+NProgress.done();
 </script>
 @yield('js')
 </body>

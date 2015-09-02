@@ -82,6 +82,7 @@
 
                 <div class="am-cf">
                     <div class="am-fr">
+
                         {!! $brands->render() !!}
                     </div>
                 </div>
@@ -112,8 +113,9 @@
                 //     location.href=location.href;
                 // }
             });
+        });
 
-        })
+
     })
 </script>
 @stop
