@@ -10,7 +10,7 @@
 
     @include('errors._list')
 
-    <form class="am-form" action="{{ route('admin.type.{type_id}.attribute.store', $type_id) }}" method="post">
+    <form class="am-form" action="{{ route('admin.type.{type_id}.attribute.update', [$type_id, $attribute->id]) }}" method="post">
         {!! csrf_field() !!}
         {!! method_field('put') !!}
         <div class="am-g am-margin-top">
