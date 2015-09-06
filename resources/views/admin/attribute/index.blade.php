@@ -4,6 +4,9 @@
     <div class="am-cf am-padding">
         <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">商品管理</strong> / <small>商品品牌</small></div>
     </div>
+
+    @include('layouts._message')
+
     <div class="am-g">
         <div class="am-u-sm-12 am-u-md-6">
             <div class="am-btn-toolbar">

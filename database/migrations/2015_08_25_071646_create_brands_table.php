@@ -19,7 +19,7 @@ class CreateBrandsTable extends Migration
              $table->string('url');
              $table->string('logo');
              $table->smallInteger('sort_order')->default('99');
-             $table->boolean('is_show')->default('true');
+             $table->boolean('is_show')->default(true);
              $table->timestamps();
         });
     }

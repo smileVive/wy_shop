@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    @include('errors._list')
+    @include('layouts._message')
 
     <form class="am-form" action="{{ route('admin.type.store') }}" method="post">
         {!! csrf_field() !!}

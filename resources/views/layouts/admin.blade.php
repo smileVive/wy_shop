@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Amaze UI Admin index Examples</title>
+  <title>wyshop商城管理系统</title>
   <meta name="description" content="这是一个 index 页面">
   <meta name="keywords" content="index">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -66,7 +66,7 @@
           <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
             <li><a href="admin-user.html" class="am-cf"><span class="am-icon-list"></span> 商品列表<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
             <li><a href="admin-help.html"><span class="am-icon-cart-plus"></span> 添加新商品</a></li>
-            <li><a href="admin-gallery.html"><span class="am-icon-th"></span> 商品分类<span class="am-badge am-badge-secondary am-margin-right am-fr">24</span></a></li>
+            <li><a href="{{ route('admin.category.index') }}"><span class="am-icon-th"></span> 商品分类<span class="am-badge am-badge-secondary am-margin-right am-fr">24</span></a></li>
             <li><a href="admin-log.html"><span class="am-icon-comments-o"></span> 用户评论</a></li>
             <li><a href="{{ route('admin.brand.index') }}"><span class="am-icon-apple"></span> 商品品牌</a></li>
             <li><a href="{{ route('admin.type.index') }}"><span class="am-icon-thumb-tack"></span> 商品类型</a></li>
@@ -132,6 +132,7 @@ $.ajaxSetup({
 NProgress.start();
 NProgress.done();
 </script>
+
 @yield('js')
 </body>
 </html>

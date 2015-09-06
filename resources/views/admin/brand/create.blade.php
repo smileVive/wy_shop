@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    @include('errors._list')
+    @include('layouts._message')
 
     <form class="am-form" action="{{ route('admin.brand.store') }}" method="post">
         {!! csrf_field() !!}
@@ -43,10 +43,10 @@
                         <i class="am-icon-cloud-upload" id="loading"></i> 选择要上传的logo
                     </button>
                     <input id="doc-form-file" type="file" multipleaa>
-                    <input type="hidden" name="logo" value="" id="logo">
+                    <input type="hidden" name="logo" value="" id="img">
                 </div>
                 <div id="file-list"></div>
-                <img src="" alt="" id="brand_logo_img"/>
+                <img src="" alt="" id="img_show"/>
             </div>
         </div>
 
@@ -90,6 +90,6 @@
 
 
 @section('js')
-<script src="{{ asset('js/jquery.html5-fileupload.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery.html5-fileupload.js') }}"></script>
+    <script src="{{ asset('js/upload.js') }}"></script>
 @stop

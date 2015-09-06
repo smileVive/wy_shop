@@ -14,13 +14,17 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-
             $table->integer('parent_id');
 
-            $table->tinyInteger('attr_type');
-            $table->tinyInteger('input_type');
-            $table->text('value');
+            $table->string('name');
+            $table->smallInteger('sort_order')->default('99');
+            $table->string('filter_attr');
+
+            $table->boolean('show_in_nav')->default(false);
+            $table->boolean('is_show')->default(true);
+            $table->string('thumb');
+
+            $table->text('desc');
 
             $table->timestamps();
         });

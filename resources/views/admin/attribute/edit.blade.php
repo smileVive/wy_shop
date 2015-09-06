@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    @include('errors._list')
+    @include('layouts._message')
 
     <form class="am-form" action="{{ route('admin.type.{type_id}.attribute.update', [$type_id, $attribute->id]) }}" method="post">
         {!! csrf_field() !!}
