@@ -23,7 +23,7 @@ class CategoryController extends Controller
     public function index()
     {
         //查询栏目，并存入缓存
-        $categories = Cache::rememberForever('categories', function () {
+        $categories = Cache::rememberForever('admin_category_categories', function () {
             return $this->get_categories();
         });
         return view('admin.category.index', ['categories' => $categories]);
@@ -31,7 +31,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $categories = Cache::rememberForever('categories', function () {
+        $categories = Cache::rememberForever('admin_category_categories', function () {
             return $this->get_categories();
         });
 
@@ -41,7 +41,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        Cache::forget('categories');        //清除缓存
+        Cache::forget('admin_category_categories');        //清除缓存
 
         $filter_attr = serialize(array_unique($request->filter_attr));     //数组去重复, 序列化
         //数组合并，两种方法都可以用
@@ -54,7 +54,7 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        $categories = Cache::rememberForever('categories', function () {
+        $categories = Cache::rememberForever('admin_category_categories', function () {
             return $this->get_categories();
         });
         $types = Type::with("attributes")->get();
@@ -75,7 +75,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        Cache::forget('categories');
+        Cache::forget('admin_category_categories');
         $category = Category::find($id);
 
         $filter_attr = serialize(array_unique($request->filter_attr));     //数组去重复, 序列化
@@ -87,7 +87,7 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        Cache::forget('categories');
+        Cache::forget('admin_category_categories');
         Category::destroy($id);
         return back()->with('info', '删除分类成功');
     }
