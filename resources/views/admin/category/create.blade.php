@@ -148,7 +148,6 @@
     <script>
         $(function () {
 
-
             $('#add_filter').click(function () {
                 var filter = '<div class="am-g am-margin-top filter">' +
                         '<div class="am-u-md-3 am-u-md-offset-2">' +
@@ -201,6 +200,7 @@
 
             //筛选属性
             var types = {!! $types !!};
+            console.log(types);
             $(document).on("change", ".type",function(){
                 var html = '';
                 var type_key = $(this).val();

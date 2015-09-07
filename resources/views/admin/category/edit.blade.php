@@ -4,7 +4,7 @@
 
     <div class="am-cf am-padding">
         <div class="am-fl am-cf">
-            <strong class="am-text-primary am-text-lg">商品管理</strong> / <small>添加分类</small>
+            <strong class="am-text-primary am-text-lg">商品管理</strong> / <small>编辑分类</small>
         </div>
     </div>
 
@@ -69,38 +69,64 @@
         </div>
 
 
+        @if($category->filter_attr->isEmpty())
+            <div class="am-g am-margin-top filter">
+                <div class="am-u-md-3 am-u-md-offset-2">
+                    <select data-am-selected="{btnWidth: '100%', btnStyle: 'primary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                            class="type select0">
+                        <option value="-1">请选择商品类型</option>
+                        @foreach ($types as $k=>$type)
+                            <option value="{{ $k }}">
+                                {{ $type->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
-        @foreach( $category->filter_attr as $key=>$attr)
-        <div class="am-g am-margin-top filter">
-            <div class="am-u-md-3 am-u-md-offset-2">
-                <select data-am-selected="{btnWidth: '100%', btnStyle: 'primary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
-                        class="type @if($key==0) select0 @endif">
-                    <option value="-1">请选择商品类型</option>
-                    @foreach ($types as $k=>$type)
-                        <option value="{{ $k }}" @if($attr->type->id == $type->id) selected @endif>
-                            {{ $type->name }}
-                        </option>
-                    @endforeach
-                </select>
+                <div class="am-u-md-3">
+                    <select data-am-selected="{btnWidth: '100%', btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                            class="attributes" name="filter_attr[]">
+                    </select>
+                </div>
+                <div class="am-u-md-2 am-u-end col-end">
+                    <button type="button" class="am-btn am-btn-danger am-round">
+                        <span class="am-icon-trash trash0"> 删除</span>
+                    </button>
+                </div>
             </div>
+        @else
+            @foreach( $category->filter_attr as $key=>$attr)
+            <div class="am-g am-margin-top filter">
+                <div class="am-u-md-3 am-u-md-offset-2">
+                    <select data-am-selected="{btnWidth: '100%', btnStyle: 'primary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                            class="type @if($key==0) select0 @endif">
+                        <option value="-1">请选择商品类型</option>
+                        @foreach ($types as $k=>$type)
+                            <option value="{{ $k }}" @if($attr->type->id == $type->id) selected @endif>
+                                {{ $type->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <div class="am-u-md-3">
-                <select data-am-selected="{btnWidth: '100%', btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
-                        class="attributes" name="filter_attr[]">
-                    @foreach($attr->type->attributes as $a)
-                        <option value="{{$a->id}}" @if($attr->id == $a->id) selected @endif>
-                            {{$a->name}}
-                        </option>
-                    @endforeach
-                </select>
+                <div class="am-u-md-3">
+                    <select data-am-selected="{btnWidth: '100%', btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                            class="attributes" name="filter_attr[]">
+                        @foreach($attr->type->attributes as $a)
+                            <option value="{{$a->id}}" @if($attr->id == $a->id) selected @endif>
+                                {{$a->name}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="am-u-md-2 am-u-end col-end">
+                    <button type="button" class="am-btn am-btn-danger am-round">
+                        <span class="am-icon-trash @if($key==0) trash0 @else trash @endif"> 删除</span>
+                    </button>
+                </div>
             </div>
-            <div class="am-u-md-2 am-u-end col-end">
-                <button type="button" class="am-btn am-btn-danger am-round">
-                    <span class="am-icon-trash @if($key==0) trash0 @else trash @endif"> 删除</span>
-                </button>
-            </div>
-        </div>
-        @endforeach
+            @endforeach
+        @endif
 
 
         <div class="am-g am-margin-top sort">
