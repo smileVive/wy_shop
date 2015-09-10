@@ -293,3 +293,4 @@ $(function () {
         $(this).parents('.am-g').find('.money').val('');
     });
 })
+

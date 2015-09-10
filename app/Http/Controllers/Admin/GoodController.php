@@ -38,6 +38,7 @@ class GoodController extends Controller
         $categories = $this->get_categories();
 
         $types = Type::with('attributes')->get();
+
         return view('admin.good.create', ['brands' => $brands, 'categories' => $categories, 'types' => $types]);
     }
 
