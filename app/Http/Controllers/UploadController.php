@@ -37,20 +37,20 @@ class UploadController extends Controller
 
             //上传文件夹，如果不存在，建立文件夹
             $date = date("Y_m");
-            $path = getcwd().'/uploads/'.$date;
+            $path = getcwd().'/uploads/image/'.$date;
             if(!is_dir($path)) {
                 mkdir($path);
             }
 
             //生成新文件名
             $extension = $request->file('Filedata')->getClientOriginalExtension();
-            $file_name=md5(time().rand(0,9999999)).'.'.$extension;
 
+            $file_name = date("YmdHis") . '_' . rand(10000, 99999) . '.' . $extension;
             $request->file('Filedata')->move($path, $file_name);
 
             //返回新文件名
             $result['status'] = 1;
-            $result['info'] = '/uploads/'.$date.'/'.$file_name;
+            $result['info'] = '/uploads/image/'.$date.'/'.$file_name;
             return $result;
         }
     }

@@ -60,10 +60,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
 		Route::resource('attribute', 'AttributeController', ['except' => ['show']]);
 	});
 
-
 	//栏目管理
 	Route::resource('category', 'CategoryController', ['except' => ['show']]);
 
-
+	//商品管理
 	Route::resource('good', 'GoodController');
 });

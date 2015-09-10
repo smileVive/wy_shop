@@ -68,6 +68,7 @@
                     </button>
                 </div>
             </div>
+
             <div class="am-g am-margin-top filter">
                 <div class="am-u-md-3 am-u-md-offset-2">
                     <select data-am-selected="{btnWidth: '100%', btnStyle: 'primary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
@@ -147,7 +148,7 @@
     <script src="{{ asset('js/upload.js') }}"></script>
     <script>
         $(function () {
-
+            //增加筛选
             $('#add_filter').click(function () {
                 var filter = '<div class="am-g am-margin-top filter">' +
                         '<div class="am-u-md-3 am-u-md-offset-2">' +
@@ -194,13 +195,13 @@
                 $attributes.empty();
                 $(".select0 option:first").attr('selected', true);
             });
-            $(document).on("click", ".trash",function() {
+            $(document).on("click", ".trash", function() {
                 $(this).parents(".filter").remove();
             });
 
             //筛选属性
             var types = {!! $types !!};
-            console.log(types);
+//            console.log(types);
             $(document).on("change", ".type",function(){
                 var html = '';
                 var type_key = $(this).val();

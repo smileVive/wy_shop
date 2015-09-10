@@ -26,13 +26,6 @@ class CategoryController extends Controller
 
     public function index()
     {
-//        if (!Cache::has('admin_category_categories')) {
-//            $categories = $this->get_categories();
-//            Cache::forever('admin_category_categories', $categories);
-//        } else {
-//            $categories = Cache::get('admin_category_categories');
-//        }
-
         //查询栏目，并存入缓存
         $categories = $this->get_categories();
         return view('admin.category.index', ['categories' => $categories]);
@@ -49,39 +42,51 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         Cache::forget('admin_category_categories');        //清除缓存
-        $filter_attr = serialize(array_unique($request->filter_attr));     //数组去重复, 序列化
-
-        //数组合并，两种方法都可以用
-        //$category = array_merge($request->except('filter_attr'), ['filter_attr' => $filter_attr]);
+        //判断是否为空，数组去重复, 序列化
+        $filter_attr = $request->filter_attr == "" ? "" : serialize(array_unique($request->filter_attr));
+        //合并数组
         $category = array_add($request->except('filter_attr'), 'filter_attr', $filter_attr);
-        Category::create($category);
 
+        Category::create($category);
         return redirect(route('admin.category.index'))->with('info', '添加分类成功');
     }
 
     public function edit($id)
     {
         $categories = $this->get_categories();
-
         $types = Type::with("attributes")->get();
         $category = Category::find($id);
 
         //将筛选数据重新插回当前栏目中
         $category->filter_attr = Attribute::with('type.attributes')->whereIn('id', unserialize($category->filter_attr))->get();
 
-        return view('admin.category.edit', ['category' => $category, 'categories' => $categories, 'types'=>$types]);
+        return view('admin.category.edit', ['category' => $category, 'categories' => $categories, 'types' => $types]);
     }
 
     public function update(Request $request, $id)
     {
-        Cache::forget('admin_category_categories');
         $category = Category::find($id);
-
-        $filter_attr = serialize(array_unique($request->filter_attr));     //数组去重复, 序列化
+        $filter_attr = $request->filter_attr == "" ? "" : serialize(array_unique($request->filter_attr));
         $data = array_add($request->except('filter_attr'), 'filter_attr', $filter_attr);
 
         $category->update($data);
+
+        Cache::forget('admin_category_categories');
         return redirect(route('admin.category.index'));
+    }
+
+    //查询子节点
+    public function child_node($parent_id)
+    {
+        static $result = array();
+        $category = Category::where('parent_id', $parent_id)->get();
+        if ($category) {
+            foreach($category as $cate){
+                $result[] = $cate->id;
+                $this->get_child($cate->id);
+            }
+        }
+        return $result;
     }
 
     public function destroy($id)

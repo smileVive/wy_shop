@@ -4,7 +4,7 @@
 
     <div class="am-cf am-padding">
         <div class="am-fl am-cf">
-            <strong class="am-text-primary am-text-lg">商品管理</strong> / <small>添加商品</small>
+            <strong class="am-text-primary am-text-lg">商品管理</strong> / <small>添加品牌</small>
         </div>
     </div>
 

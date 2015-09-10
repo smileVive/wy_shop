@@ -46,7 +46,6 @@
             <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
                 <input type="radio" name="attr_type" value="0" checked>唯一属性
                 <input type="radio" name="attr_type" value="1">单选属性
-                <input type="radio" name="attr_type" value="2">复选属性
             </div>
         </div>
 
@@ -57,7 +56,6 @@
             <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
                 <input type="radio" name="input_type" value="0" checked>手工录入
                 <input type="radio" name="input_type" value="1">从下面的列表中选择（一行代表一个可选值）
-                <input type="radio" name="input_type" value="2">多行文本框
             </div>
         </div>
 

@@ -185,6 +185,7 @@
 
 <script>
     $(function() {
+
         $('#add_filter').click(function () {
             var filter = '<div class="am-g am-margin-top filter">' +
                     '<div class="am-u-md-3 am-u-md-offset-2">' +
