@@ -3,9 +3,13 @@
 namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Good extends Model
 {
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
     protected $guarded = [];
 
     //每个商品都属于某一个品牌
@@ -24,5 +28,11 @@ class Good extends Model
     public function good_attrs()
     {
         return $this->hasMany('App\Models\Good_attr');
+    }
+
+    //一个商品有很多相册图片
+    public function good_galleries()
+    {
+        return $this->hasMany('App\Models\good_gallery');
     }
 }

@@ -1,4 +1,8 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('webupload/dist/webuploader.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('webupload/style.css') }}" />
+@stop
 @section('content')
     <div class="admin-content">
 
@@ -23,6 +27,29 @@
 
                 <div class="am-tabs-bd">
                     <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+
+
+
+                        <div id="uploader">
+                            <div class="queueList">
+                                <div id="dndArea" class="placeholder">
+                                    <div id="filePicker"></div>
+                                    <p>或将照片拖到这里，单次最多可选300张</p>
+                                </div>
+                            </div>
+                            <div class="statusBar" style="display:none;">
+                                <div class="progress">
+                                    <span class="text">0%</span>
+                                    <span class="percentage"></span>
+                                </div><div class="info"></div>
+                                <div class="btns">
+                                    <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+                                </div>
+                            </div>
+
+                            <div id="imgs"></div>
+                        </div>
+
 
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">
@@ -103,7 +130,7 @@
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">上架</div>
                             <div class="am-u-sm-8 am-u-md-10">
-                                <div class="am-btn-group" >
+                                <div class="am-btn-group">
 
                                     <input type="checkbox" value="1" name="onsale" checked> 选中表示允许销售，否则不允许销售。
                                 </div>
@@ -198,7 +225,6 @@
     </div>
 @stop
 
-
 @section('js')
     <script src="{{ asset('js/jquery.html5-fileupload.js') }}"></script>
     <script src="{{ asset('js/upload.js') }}"></script>
@@ -213,4 +239,6 @@
     </script>
     <script src="{{ asset('js/create_good.js') }}"></script>
 
+    <script type="text/javascript" src="{{asset('webupload/dist/webuploader.js')}}"></script>
+    <script type="text/javascript" src="{{asset('webupload/upload.js')}}"></script>
 @stop

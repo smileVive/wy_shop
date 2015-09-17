@@ -12,6 +12,7 @@ use App\Models\Category;
 use Cache;
 use App\Models\Type;
 use App\Models\Good_attr;
+use App\Models\Good_gallery;
 
 
 class GoodController extends Controller
@@ -19,12 +20,11 @@ class GoodController extends Controller
     private function get_categories()
     {
         $categories = Cache::rememberForever('admin_category_categories', function () {
-            $categories = Category::orderBy('parent_id', 'asc', 'sort_order', 'asc', 'id', 'asc')->get();
+            $categories = Category::orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
             return tree($categories);
         });
         return $categories;
     }
-
 
     public function index()
     {
@@ -44,19 +44,31 @@ class GoodController extends Controller
 
     public function store(Request $request)
     {
+//        return $request->all();
 
-//        return $request->except(['attr_id_list', 'attr_value_list', 'attr_price_list']);
         //新增商品
-        $good = Good::create($request->except(['attr_id_list', 'attr_value_list', 'attr_price_list']));
+        $good = Good::create($request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']));
 
         //增加属性
-        foreach ($request->attr_id_list as $k => $v) {
-            $good_attr = new Good_attr;
-            $good_attr->good_id = $good->id;
-            $good_attr->attr_id = $v;
-            $good_attr->attr_value = $request->attr_value_list["$k"];
-            $good_attr->attr_price = $request->attr_price_list["$k"];
-            $good_attr->save();
+        if ($request->attr_id_list) {
+            foreach ($request->attr_id_list as $k => $v) {
+                $good_attr = new Good_attr;
+                $good_attr->good_id = $good->id;
+                $good_attr->attr_id = $v;
+                $good_attr->attr_value = $request->attr_value_list["$k"];
+                $good_attr->attr_price = $request->attr_price_list["$k"];
+                $good_attr->save();
+            }
+        }
+
+        //商品相册
+        if ($request->imgs) {
+            foreach ($request->imgs as $img) {
+                $good_gallery = new Good_gallery();
+                $good_gallery->good_id = $good->id;
+                $good_gallery->img = $img;
+                $good_gallery->save();
+            }
         }
 
         return redirect(route('admin.good.index'))->with('info', '添加商品成功');
@@ -67,9 +79,9 @@ class GoodController extends Controller
         $brands = Brand::orderBy('sort_order')->get();
         $categories = $this->get_categories();
         $types = Type::with('attributes')->get();
-        $good = Good::with('good_attrs')->find($id);
-//        return $good;
-        return view('admin.good.edit', ['good' => $good, 'brands' => $brands, 'categories' => $categories, 'types' => $types]);
+        $good = Good::with('good_attrs','good_galleries')->find($id);
+        return $good;
+        return view('admin.good.edit', ['g ood' => $good, 'brands' => $brands, 'categories' => $categories, 'types' => $types]);
     }
 
     public function update(Request $request, $id)
@@ -82,5 +94,26 @@ class GoodController extends Controller
         Good::destroy($id);
         Good_attr::where('good_id', $id)->delete();
         return back()->with('info', '删除分类成功');
+    }
+
+    //商品回收站
+    public function trash()
+    {
+        $goods = Good::onlyTrashed()->paginate(config('wyshop.page_size'));
+        return view('admin.good.trash', ['goods' => $goods]);
+    }
+
+    public function restore($id)
+    {
+        $good = Good::withTrashed()->find($id);
+        $good->restore();
+        return back()->with('info', '还原成功');
+    }
+
+    public function force_destroy($id)
+    {
+        $good = Good::withTrashed()->find($id);
+        $good->forceDelete();
+        return back()->with('info', '删除成功');
     }
 }

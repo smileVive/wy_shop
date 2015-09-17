@@ -88,7 +88,7 @@
                         <li>
                             <a href="{{ route('admin.type.index') }}"><span class="am-icon-thumb-tack"></span> 商品类型</a>
                         </li>
-                        <li><a href="admin-404.html"><span class="am-icon-trash"></span> 商品回收站</a></li>
+                        <li><a href="/admin/good/trash"><span class="am-icon-trash"></span> 商品回收站</a></li>
 
                     </ul>
                 </li>

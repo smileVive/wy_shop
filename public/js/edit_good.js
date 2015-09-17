@@ -239,7 +239,7 @@ function build_form_old() {
         }
         var index = 0;
         $.each(good_attrs, function(key, value){
-            console.log(index);
+            //console.log(index);
             if(value.attr_id == attribute.id) {
                 if(index == 0) {
                     html += build_input_old(attribute, value);

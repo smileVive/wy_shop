@@ -17,7 +17,7 @@ class CategoryController extends Controller
     private function get_categories()
     {
         $categories = Cache::rememberForever('admin_category_categories', function () {
-            $categories = Category::orderBy('parent_id', 'asc', 'sort_order', 'asc', 'id', 'asc')->get();
+            $categories = Category::orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
             return tree($categories);
         });
         return $categories;
