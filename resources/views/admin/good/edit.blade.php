@@ -1,4 +1,8 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('webupload/dist/webuploader.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('webupload/style.css') }}"/>
+@stop
 @section('content')
     <div class="admin-content">
 
@@ -91,13 +95,16 @@
                                 <div class="am-btn-group" data-am-button>
 
                                     <label class="am-btn am-btn-default am-btn-xs @if($good->best == 1) am-active @endif">
-                                        <input type="checkbox" name="best" value="1" @if($good->best == 1) checked @endif> 精品
+                                        <input type="checkbox" name="best" value="1" @if($good->best == 1) checked @endif>
+                                        精品
                                     </label>
                                     <label class="am-btn am-btn-default am-btn-xs @if($good->new == 1) am-active @endif">
-                                        <input type="checkbox" name="new" value="1" @if($good->new == 1) checked @endif> 新品
+                                        <input type="checkbox" name="new" value="1" @if($good->new == 1) checked @endif>
+                                        新品
                                     </label>
                                     <label class="am-btn am-btn-default am-btn-xs @if($good->hot == 1) am-active @endif">
-                                        <input type="checkbox" name="hot" value="1" @if($good->hot == 1) checked @endif> 热销
+                                        <input type="checkbox" name="hot" value="1" @if($good->hot == 1) checked @endif>
+                                        热销
                                     </label>
                                 </div>
                             </div>
@@ -106,9 +113,10 @@
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">上架</div>
                             <div class="am-u-sm-8 am-u-md-10">
-                                <div class="am-btn-group" >
+                                <div class="am-btn-group">
 
-                                    <input type="checkbox" value="1" name="onsale" @if($good->onsale == 1) checked @endif> 选中表示允许销售，否则不允许销售。
+                                    <input type="checkbox" value="1" name="onsale" @if($good->onsale == 1) checked @endif>
+                                    选中表示允许销售，否则不允许销售。
                                 </div>
                             </div>
                         </div>
@@ -162,31 +170,36 @@
                     </div>
 
                     <div class="am-tab-panel am-fade" id="tab3">
-                        <div class="am-g am-margin-top-sm">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                SEO 标题
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4 am-u-end">
-                                <input type="text" class="am-input-sm">
-                            </div>
-                        </div>
 
-                        <div class="am-g am-margin-top-sm">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                SEO 关键字
+                        <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list">
+                            @foreach($good->good_galleries as $gallery)
+                                <li>
+                                    <a href="#">
+                                        <img class="am-img-thumbnail am-img-bdrs" src="{{$gallery->img}}" alt=""/>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div id="uploader">
+                            <div class="queueList">
+                                <div id="dndArea" class="placeholder">
+                                    <div id="filePicker"></div>
+                                    <p>或将照片拖到这里，单次最多可选300张</p>
+                                </div>
                             </div>
-                            <div class="am-u-sm-8 am-u-md-4 am-u-end">
-                                <input type="text" class="am-input-sm">
+                            <div class="statusBar" style="display:none;">
+                                <div class="progress">
+                                    <span class="text">0%</span>
+                                    <span class="percentage"></span>
+                                </div>
+                                <div class="info"></div>
+                                <div class="btns">
+                                    <div id="filePicker2"></div>
+                                    <div class="uploadBtn">开始上传</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="am-g am-margin-top-sm">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                SEO 描述
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4 am-u-end">
-                                <textarea rows="4"></textarea>
-                            </div>
+                            <div id="imgs"></div>
                         </div>
                     </div>
 
@@ -218,4 +231,6 @@
         var good_type_id = {!! $good->type_id !!};
     </script>
     <script src="{{ asset('js/edit_good.js') }}"></script>
+    <script type="text/javascript" src="{{asset('webupload/dist/webuploader.js')}}"></script>
+    <script type="text/javascript" src="{{asset('webupload/upload.js')}}"></script>
 @stop

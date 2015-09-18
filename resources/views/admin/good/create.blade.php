@@ -30,25 +30,7 @@
 
 
 
-                        <div id="uploader">
-                            <div class="queueList">
-                                <div id="dndArea" class="placeholder">
-                                    <div id="filePicker"></div>
-                                    <p>或将照片拖到这里，单次最多可选300张</p>
-                                </div>
-                            </div>
-                            <div class="statusBar" style="display:none;">
-                                <div class="progress">
-                                    <span class="text">0%</span>
-                                    <span class="percentage"></span>
-                                </div><div class="info"></div>
-                                <div class="btns">
-                                    <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
-                                </div>
-                            </div>
 
-                            <div id="imgs"></div>
-                        </div>
 
 
                         <div class="am-g am-margin-top">
@@ -185,31 +167,24 @@
                     </div>
 
                     <div class="am-tab-panel am-fade" id="tab3">
-                        <div class="am-g am-margin-top-sm">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                SEO 标题
+                        <div id="uploader">
+                            <div class="queueList">
+                                <div id="dndArea" class="placeholder">
+                                    <div id="filePicker"></div>
+                                    <p>或将照片拖到这里，单次最多可选300张</p>
+                                </div>
                             </div>
-                            <div class="am-u-sm-8 am-u-md-4 am-u-end">
-                                <input type="text" class="am-input-sm">
+                            <div class="statusBar" style="display:none;">
+                                <div class="progress">
+                                    <span class="text">0%</span>
+                                    <span class="percentage"></span>
+                                </div><div class="info"></div>
+                                <div class="btns">
+                                    <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="am-g am-margin-top-sm">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                SEO 关键字
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4 am-u-end">
-                                <input type="text" class="am-input-sm">
-                            </div>
-                        </div>
-
-                        <div class="am-g am-margin-top-sm">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                SEO 描述
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4 am-u-end">
-                                <textarea rows="4"></textarea>
-                            </div>
+                            <div id="imgs"></div>
                         </div>
                     </div>
 

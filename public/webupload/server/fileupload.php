@@ -186,7 +186,7 @@ if ( $done ) {
     @fclose($out);
 }
 
-echo '/uploads/'.$ymd.'/'.$fileName;
+echo '/uploads/image/'.$ymd.'/'.$fileName;
 exit;
 // Return Success JSON-RPC response
 //die('{"jsonrpc" : "2.0", "result" : null, img : '+$fileName+'}');

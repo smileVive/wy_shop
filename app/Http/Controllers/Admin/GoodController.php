@@ -38,14 +38,11 @@ class GoodController extends Controller
         $categories = $this->get_categories();
 
         $types = Type::with('attributes')->get();
-
         return view('admin.good.create', ['brands' => $brands, 'categories' => $categories, 'types' => $types]);
     }
 
     public function store(Request $request)
     {
-//        return $request->all();
-
         //新增商品
         $good = Good::create($request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']));
 
@@ -80,13 +77,38 @@ class GoodController extends Controller
         $categories = $this->get_categories();
         $types = Type::with('attributes')->get();
         $good = Good::with('good_attrs','good_galleries')->find($id);
-        return $good;
-        return view('admin.good.edit', ['g ood' => $good, 'brands' => $brands, 'categories' => $categories, 'types' => $types]);
+//        return $good;
+        return view('admin.good.edit', ['good' => $good, 'brands' => $brands, 'categories' => $categories, 'types' => $types]);
     }
 
     public function update(Request $request, $id)
     {
-        return $request->all();
+//        return $request->all();
+        $good = Good::create($request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']));
+
+        //增加属性
+        if ($request->attr_id_list) {
+            foreach ($request->attr_id_list as $k => $v) {
+                $good_attr = new Good_attr;
+                $good_attr->good_id = $good->id;
+                $good_attr->attr_id = $v;
+                $good_attr->attr_value = $request->attr_value_list["$k"];
+                $good_attr->attr_price = $request->attr_price_list["$k"];
+                $good_attr->save();
+            }
+        }
+
+        //商品相册
+        if ($request->imgs) {
+            foreach ($request->imgs as $img) {
+                $good_gallery = new Good_gallery();
+                $good_gallery->good_id = $good->id;
+                $good_gallery->img = $img;
+                $good_gallery->save();
+            }
+        }
+
+        return redirect(route('admin.good.index'))->with('info', '编辑商品成功');
     }
 
     public function destroy($id)
