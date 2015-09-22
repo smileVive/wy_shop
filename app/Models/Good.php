@@ -33,6 +33,6 @@ class Good extends Model
     //一个商品有很多相册图片
     public function good_galleries()
     {
-        return $this->hasMany('App\Models\good_gallery');
+        return $this->hasMany('App\Models\Good_gallery');
     }
 }

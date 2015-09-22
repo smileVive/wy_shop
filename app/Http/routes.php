@@ -47,7 +47,7 @@ Route::group(['namespace' => 'Wechat', 'prefix' => 'wechat'], function () {
 
 
 //后台  , 'middleware' => 'auth'
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' =>  'csrf'], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' =>  ['csrf', 'auth']], function () {
     Route::get('/', 'IndexController@index');
 
 

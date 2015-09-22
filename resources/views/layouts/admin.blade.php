@@ -92,8 +92,21 @@
 
                     </ul>
                 </li>
-                <li><a href="admin-table.html"><span class="am-icon-table"></span> 表格</a></li>
-                <li><a href="{{ route('admin.good.create') }}"><span class="am-icon-pencil-square-o"></span> 表单</a></li>
+
+                <li class="admin-parent">
+                    <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}">
+                        <span class="am-icon-file"></span>
+                        微信管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
+                    </a>
+                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
+                        <li>
+                            <a href="/admin/wechat/get_menu" class="am-cf">
+                                <span class="am-icon-list"></span>自定义菜单<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li><a href="#"><span class="am-icon-sign-out"></span> 注销</a></li>
             </ul>
 
