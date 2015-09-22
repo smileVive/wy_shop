@@ -86,12 +86,22 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' =>  ['cs
     });
     Route::resource('good', 'GoodController');
 
+
+    //评论
+    Route::patch('/comment/{comment}/reply', [
+        'as' => 'admin.comment.reply', 'uses' => 'CommentController@reply'
+    ]);
     Route::resource('comment', 'CommentController');
 
+    //会员管理
+    Route::resource('user', 'UserController');
+
+    //微信管理
+    Route::group(['prefix' => 'wechat'], function () {
+        Route::get('get_menu', ['uses' => 'WechatController@get_menu']);
+        Route::put('set_menu', ['uses' => 'WechatController@set_menu']);
+        Route::get('api_config', ['uses' => 'WechatController@api_config']);
+        Route::put('set_config', ['uses' => 'WechatController@set_config']);
+    });
 });
 
-//微信自定义菜单
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin/wechat'], function () {
-    Route::get('get_menu', ['uses' => 'WechatController@get_menu']);
-    Route::put('set_menu', ['uses' => 'WechatController@set_menu']);
-});

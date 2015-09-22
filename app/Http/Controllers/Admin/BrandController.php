@@ -10,6 +10,11 @@ use App\Models\Brand;
 
 class BrandController extends Controller
 {
+    public function __construct()
+    {
+        view()->share(['_good' => 'am-in', '_brand' => 'am-active']);
+    }
+
     //品牌列表
     public function index(Request $request)
     {
@@ -52,7 +57,7 @@ class BrandController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = $request->keyword."%";
+        $keyword = $request->keyword . "%";
         $brands = Brand::orderBy('sort_order')->where('name', 'like', $keyword)->paginate(config('wyshop.page_size'));
 
         return view('admin.brand.index', ['brands' => $brands]);

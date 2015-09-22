@@ -35,4 +35,10 @@ class Good extends Model
     {
         return $this->hasMany('App\Models\Good_gallery');
     }
+
+    //一个商品有很多评论
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 }

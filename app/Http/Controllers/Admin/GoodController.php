@@ -17,6 +17,11 @@ use App\Models\Good_gallery;
 
 class GoodController extends Controller
 {
+    public function __construct()
+    {
+        view()->share(['_good' => 'am-in', '_goods' => 'am-active']);
+    }
+
     private function get_categories()
     {
         $categories = Cache::rememberForever('admin_category_categories', function () {
@@ -38,7 +43,7 @@ class GoodController extends Controller
         $categories = $this->get_categories();
 
         $types = Type::with('attributes')->get();
-        return view('admin.good.create', ['brands' => $brands, 'categories' => $categories, 'types' => $types]);
+        return view('admin.good.create', ['brands' => $brands, 'categories' => $categories, 'types' => $types, '_new_good'=> 'am-active', '_goods'=>'']);
     }
 
     public function store(Request $request)
@@ -76,7 +81,7 @@ class GoodController extends Controller
         $brands = Brand::orderBy('sort_order')->get();
         $categories = $this->get_categories();
         $types = Type::with('attributes')->get();
-        $good = Good::with('good_attrs','good_galleries')->find($id);
+        $good = Good::with('good_attrs', 'good_galleries')->find($id);
 //        return $good;
         return view('admin.good.edit', ['good' => $good, 'brands' => $brands, 'categories' => $categories, 'types' => $types]);
     }
@@ -125,7 +130,7 @@ class GoodController extends Controller
     public function trash()
     {
         $goods = Good::onlyTrashed()->paginate(config('wyshop.page_size'));
-        return view('admin.good.trash', ['goods' => $goods]);
+        return view('admin.good.trash', ['goods' => $goods, '_trash'=> 'am-active', '_goods'=>'']);
     }
 
     public function restore($id)

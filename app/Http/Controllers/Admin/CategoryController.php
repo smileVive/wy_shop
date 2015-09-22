@@ -13,6 +13,12 @@ use App\Models\Attribute;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        view()->share(['_good' => 'am-in', '_category' => 'am-active']);
+
+    }
+
     //获取栏目信息
     private function get_categories()
     {
@@ -81,7 +87,7 @@ class CategoryController extends Controller
         static $result = array();
         $category = Category::where('parent_id', $parent_id)->get();
         if ($category) {
-            foreach($category as $cate){
+            foreach ($category as $cate) {
                 $result[] = $cate->id;
                 $this->get_child($cate->id);
             }

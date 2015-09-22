@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>wyshop商城管理系统</title>
+    <title>长乐商城管理系统</title>
     <meta name="description" content="这是一个 index 页面">
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="{{ asset('amaze/css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/wyshop.css') }}">
     <link rel='stylesheet' href='{{ asset('NProgress/nprogress.css') }}'/>
-
-
     @yield('css')
 
 </head>
@@ -48,7 +46,6 @@
                     <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
                 </a>
                 <ul class="am-dropdown-content">
-                    <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
                     <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
                     <li><a href="/auth/logout"><span class="am-icon-power-off"></span> 退出</a></li>
                 </ul>
@@ -63,61 +60,110 @@
 <div class="am-cf admin-main">
     <!-- sidebar start -->
     <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
-        <div class="am-offcanvas-bar admin-offcanvas-bar">
+        <div class="am-offcanvas-bar admin-offcanvas-bar" id="menus">
             <ul class="am-list admin-sidebar-list">
                 <li><a href="/admin"><span class="am-icon-home"></span> 首页</a></li>
                 <li class="admin-parent">
-                    <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}">
+                    <a class="am-cf" data-am-collapse="{parent: '#menus', target: '#collapse-nav'}">
                         <span class="am-icon-file"></span>
                         商品管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
                     </a>
-                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
+                    <ul class="am-list am-collapse admin-sidebar-sub {{ $_good or '' }}" id="collapse-nav">
                         <li>
-                            <a href="{{ route('admin.good.index') }}" class="am-cf">
-                                <span class="am-icon-list"></span>商品列表<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>
+                            <a href="{{ route('admin.good.index') }}" class="am-cf  {{ $_goods or '' }}">
+                                <span class="am-icon-list"></span> 商品列表
+                                <span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>
                             </a>
                         </li>
-                        <li><a href="{{ route('admin.good.create') }}"><span class="am-icon-cart-plus"></span> 添加新商品</a></li>
                         <li>
-                            <a href="{{ route('admin.category.index') }}">
-                                <span class="am-icon-th"></span>商品分类<span class="am-badge am-badge-secondary am-margin-right am-fr">24</span>
+                            <a href="{{ route('admin.good.create') }}" class="{{ $_new_good or '' }}">
+                                <span class="am-icon-cart-plus"></span> 添加新商品
                             </a>
                         </li>
-                        <li><a href="admin-log.html"><span class="am-icon-comments-o"></span> 用户评论</a></li>
-                        <li><a href="{{ route('admin.brand.index') }}"><span class="am-icon-apple"></span> 商品品牌</a></li>
                         <li>
-                            <a href="{{ route('admin.type.index') }}"><span class="am-icon-thumb-tack"></span> 商品类型</a>
+                            <a href="{{ route('admin.category.index') }}" class="{{ $_category or '' }}">
+                                <span class="am-icon-th"></span> 商品分类
+                                {{--<span class="am-badge am-badge-secondary am-margin-right am-fr">24</span>--}}
+                            </a>
                         </li>
-                        <li><a href="/admin/good/trash"><span class="am-icon-trash"></span> 商品回收站</a></li>
+                        <li>
+                            <a href="{{ route('admin.comment.index') }}" class="{{ $_comment or '' }}">
+                                <span class="am-icon-comments-o"></span> 用户评论
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.brand.index') }}" class="{{ $_brand or '' }}">
+                                <span class="am-icon-apple"></span> 商品品牌
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.type.index') }}" class="{{ $_type or '' }}">
+                                <span class="am-icon-thumb-tack"></span> 商品类型
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/good/trash" class="{{ $_trash or '' }}">
+                                <span class="am-icon-trash"></span> 商品回收站
+                            </a>
+                        </li>
 
                     </ul>
                 </li>
 
                 <li class="admin-parent">
-                    <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}">
-                        <span class="am-icon-file"></span>
+                    <a class="am-cf" data-am-collapse="{parent: '#menus', target: '#collapse-wechat'}">
+                        <span class="am-icon-wechat"></span>
                         微信管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
                     </a>
-                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
+                    <ul class="am-list am-collapse admin-sidebar-sub {{ $_wechat or '' }}" id="collapse-wechat">
                         <li>
-                            <a href="/admin/wechat/get_menu" class="am-cf">
-                                <span class="am-icon-list"></span>自定义菜单<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>
+                            <a href="/admin/wechat/get_menu" class="am-cf {{ $_get_menu or '' }}">
+                                <span class="am-icon-list-ol"></span> 自定义菜单
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/wechat/api_config" class="am-cf {{ $_api_config or '' }}">
+                                <span class="am-icon-bullseye"></span> 接口配置
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <li><a href="#"><span class="am-icon-sign-out"></span> 注销</a></li>
+                <li class="admin-parent">
+                    <a class="am-cf" data-am-collapse="{parent: '#menus', target: '#collapse-order'}">
+                        <span class="am-icon-shopping-cart"></span>
+                        订单管理
+                    </a>
+                    <ul class="am-list am-collapse admin-sidebar-sub " id="collapse-order">
+                        <li>
+                            <a href="#" class="am-cf ">
+                                <span class="am-icon-list-alt"></span> 订单列表
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="am-cf }">
+                                <span class="am-icon-search"></span> 订单查询
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.user.index') }}" class="{{ $_user or '' }}">
+                        <span class="am-icon-user"></span> 会员管理
+                    </a>
+                </li>
+
+                <li><a href="/auth/logout"><span class="am-icon-sign-out"></span> 注销</a></li>
             </ul>
 
             <div class="am-panel am-panel-default admin-sidebar-panel">
                 <div class="am-panel-bd">
                     <p><span class="am-icon-bookmark"></span> 公告</p>
 
-                    <p>Welcome to whshop. whphp.com</p>
+                    <p>欢迎使用长乐商城系统~</p>
                 </div>
             </div>
-
 
         </div>
     </div>
@@ -126,7 +172,7 @@
 
     <!-- content start -->
     @yield('content')
-            <!-- content end -->
+    <!-- content end -->
 
 </div>
 

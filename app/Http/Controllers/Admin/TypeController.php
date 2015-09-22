@@ -10,6 +10,10 @@ use App\Models\Type;
 
 class TypeController extends Controller
 {
+    public function __construct()
+    {
+        view()->share(['_good' => 'am-in', '_type' => 'am-active']);
+    }
 
     public function index()
     {
