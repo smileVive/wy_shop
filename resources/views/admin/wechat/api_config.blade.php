@@ -3,6 +3,7 @@
     <style>
         .am-form textarea {
             font-size: 14px;
+            line-height: 1.6;
         }
     </style>
 @stop
@@ -28,7 +29,7 @@
                     接口配置
                 </div>
                 <div class="am-u-sm-8 am-u-md-10">
-                    <textarea class="" name="config" rows="8">{!! $config !!}</textarea>
+                    <textarea class="" name="config" rows="8" spellcheck="false">{{ $config }}</textarea>
                 </div>
             </div>
 

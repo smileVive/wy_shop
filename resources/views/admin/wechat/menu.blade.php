@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('content')
     <div class="admin-content">
         <div class="am-cf am-padding">

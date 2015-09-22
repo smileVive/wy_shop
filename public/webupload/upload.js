@@ -185,8 +185,8 @@
 
             //var imgs = [];
             //传完php返回信息
-            uploader.on('uploadSuccess', function( file, response ) {
-                console.log(response._raw);
+            uploader.on('uploadAccept', function( file, response ) {
+                //console.log(response._raw);
                 var html = "<input type='hidden' name='imgs[]' value='"+response._raw+"'>";
                 $("#imgs").append(html);
             });
