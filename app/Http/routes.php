@@ -37,8 +37,17 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 //上传
 Route::post('upload', 'UploadController@store');
 
+
+//微信接口
+
+Route::group(['namespace' => 'Wechat', 'prefix' => 'wechat'], function () {
+    Route::any('/api', 'ApiController@serve');
+
+});
+
+
 //后台  , 'middleware' => 'auth'
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' =>  'csrf'], function () {
     Route::get('/', 'IndexController@index');
 
 
@@ -79,4 +88,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::resource('comment', 'CommentController');
 
+});
+
+//微信自定义菜单
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin/wechat'], function () {
+    Route::get('get_menu', ['uses' => 'WechatController@get_menu']);
+    Route::put('set_menu', ['uses' => 'WechatController@set_menu']);
 });

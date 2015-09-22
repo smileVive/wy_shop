@@ -84,10 +84,13 @@ class GoodController extends Controller
     public function update(Request $request, $id)
     {
 //        return $request->all();
-        $good = Good::create($request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']));
+        $good = Good::find($id);
+        $good->update($request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']));
 
         //增加属性
         if ($request->attr_id_list) {
+            //先删除原有属性
+            Good_attr::where('good_id', $id)->delete();
             foreach ($request->attr_id_list as $k => $v) {
                 $good_attr = new Good_attr;
                 $good_attr->good_id = $good->id;

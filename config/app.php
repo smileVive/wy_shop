@@ -151,6 +151,10 @@ return [
 		//权限管理
 		Zizaco\Entrust\EntrustServiceProvider::class,
 
+        //微信
+        Overtrue\LaravelWechat\ServiceProvider::class,
+
+
     ],
 
     /*
@@ -201,6 +205,9 @@ return [
 
 		//权限
 		'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+
+        //微信
+        'Wechat' => Overtrue\LaravelWechat\Facade::class,
 
     ],
 
