@@ -42,7 +42,6 @@ Route::post('upload', 'UploadController@store');
 
 Route::group(['namespace' => 'Wechat', 'prefix' => 'wechat'], function () {
     Route::any('/api', 'ApiController@serve');
-
 });
 
 
