@@ -10,7 +10,6 @@ use Cache;
 
 use Overtrue\Wechat\Menu;
 use Overtrue\Wechat\MenuItem;
-use Overtrue\Wechat\User;
 
 class WechatController extends Controller
 {

@@ -11,6 +11,7 @@
 
         @include('layouts._message')
         <form action="/admin/wechat/set_menu" method="post" class="am-form">
+            {!! csrf_field() !!}
             {!! method_field('put') !!}
 
             <div class="am-tabs am-margin" data-am-tabs>
