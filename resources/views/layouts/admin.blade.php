@@ -129,23 +129,11 @@
                     </ul>
                 </li>
 
-                <li class="admin-parent">
-                    <a class="am-cf" data-am-collapse="{parent: '#menus', target: '#collapse-order'}">
-                        <span class="am-icon-shopping-cart"></span>
-                        订单管理
+
+                <li>
+                    <a href="{{ route('admin.order.index') }}" class="{{ $_order or '' }}">
+                        <span class="am-icon-list-alt"></span> 订单管理
                     </a>
-                    <ul class="am-list am-collapse admin-sidebar-sub " id="collapse-order">
-                        <li>
-                            <a href="#" class="am-cf ">
-                                <span class="am-icon-list-alt"></span> 订单列表
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="am-cf }">
-                                <span class="am-icon-search"></span> 订单查询
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <li>
@@ -153,6 +141,28 @@
                         <span class="am-icon-user"></span> 会员管理
                     </a>
                 </li>
+
+
+                <li class="admin-parent">
+                    <a class="am-cf" data-am-collapse="{parent: '#menus', target: '#collapse-system'}">
+                        <span class="am-icon-cog"></span>
+                        系统设置 <span class="am-icon-angle-right am-fr am-margin-right"></span>
+                    </a>
+                    <ul class="am-list am-collapse admin-sidebar-sub {{ $_system or '' }}" id="collapse-system">
+                        <li>
+                            <a href="#" class="am-cf {{ $_config or '' }}">
+                                <span class="am-icon-dashboard"></span> 商店设置
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.express.index') }}" class="am-cf {{ $_express or '' }}">
+                                <span class="am-icon-plane"></span> 物流运费
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
 
                 <li><a href="/auth/logout"><span class="am-icon-sign-out"></span> 注销</a></li>
             </ul>

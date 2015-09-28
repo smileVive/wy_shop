@@ -64,7 +64,7 @@ class WechatController extends Controller
         // dd($target);
         $menu->set($target); // 失败会抛出异常
         Cache::forget('admin_wechat_menus');
-        return back()->with('info', '您已成功设置菜单，请取消关注后，再重新关注~');;
+        return back()->with('info', '您已成功设置菜单，请取消关注后，再重新关注~');
     }
 
 

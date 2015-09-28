@@ -31,7 +31,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         Brand::create($request->all());
-        return redirect(route('admin.brand.index'));
+        return redirect(route('admin.brand.index'))->with('info', '新增品牌成功~');
     }
 
     //修改品牌
@@ -45,13 +45,13 @@ class BrandController extends Controller
     {
         $brand = Brand::find($id);
         $brand->update($request->all());
-        return redirect(route('admin.brand.index'));
+        return redirect(route('admin.brand.index'))->with('info', '编辑品牌成功~');;
     }
 
     public function destroy($id)
     {
         Brand::destroy($id);
-        return back();
+        return back()->with('info', '删除品牌成功~');;
     }
 
 

@@ -40,13 +40,14 @@ Route::post('upload', 'UploadController@store');
 
 //微信接口
 
-Route::group(['namespace' => 'Wechat', 'prefix' => 'wechat'], function () {
-    Route::any('/api', 'ApiController@serve');
+Route::group(['namespace' => 'Wechat'], function () {
+    Route::any('/wechat_api', 'ApiController@serve');
+    Route::get('/', 'IndexController@index');
 });
 
 
 //后台  , 'middleware' => 'auth'
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' =>  ['csrf', 'auth']], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['csrf', 'auth']], function () {
     Route::get('/', 'IndexController@index');
 
 
@@ -94,6 +95,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' =>  ['cs
 
     //会员管理
     Route::resource('user', 'UserController');
+
+    //物流运费
+    Route::resource('express', 'ExpressController');
+
+    //订单管理
+    Route::resource('order', 'OrderController');
 
     //微信管理
     Route::group(['prefix' => 'wechat'], function () {

@@ -78,7 +78,6 @@ class ApiController extends Controller
             }
         });
 
-
         // return Message::make('text')->content('我们已经收到您发送的图片！');
         return $server->serve(); // 或者 return $server;
     }
