@@ -42,6 +42,7 @@
                             <th class="table-id">编号</th>
                             <th class="table-title">商品名称</th>
                             <th>商品缩略图</th>
+                            <th>分类</th>
                             <th>价格</th>
                             <th class="am-hide-sm-only">上架</th>
                             <th class="am-hide-sm-only">精品</th>
@@ -60,6 +61,7 @@
                             <td class="good_id">{{ $good->id }}</td>
                             <td>{{ $good->name }}</td>
                             <td class="brand_logo"><img src="{{ $good->thumb }}" alt="" /></td>
+                            <td>{{ $good->category->name }}</td>
                             <td>{{ $good->price }}</td>
 
                             <td class="am-hide-sm-only">

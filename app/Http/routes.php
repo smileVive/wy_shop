@@ -43,6 +43,9 @@ Route::post('upload', 'UploadController@store');
 Route::group(['namespace' => 'Wechat'], function () {
     Route::any('/wechat_api', 'ApiController@serve');
     Route::get('/', 'IndexController@index');
+    Route::get('category', 'IndexController@category');
+    Route::get('category/{category_id}', 'IndexController@good_list');
+    Route::get('good/{good_id}', 'IndexController@good');
 });
 
 

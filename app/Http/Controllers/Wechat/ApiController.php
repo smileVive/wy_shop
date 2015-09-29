@@ -18,6 +18,8 @@ class ApiController extends Controller
         // $server->on('event', 'subscribe', function($event){
 // 			return Message::make('text')->content('您好！欢迎关注 长乐未央');
 // 		});
+
+        //点击事件回复
         $server->on('event', function ($event) {
             switch ($event->Event) {
                 case 'subscribe':
@@ -25,11 +27,17 @@ class ApiController extends Controller
                     break;
                 case 'CLICK':
                     switch ($event->EventKey) {
-                        case 'rq':
-                            return $this->rq();
+                        case 'best':
+                            return $this->best();
                             break;
                         case 'hot':
-                            return Message::make('text')->content('您好！欢迎关注 长乐未央');
+                            return $this->hot();
+                            break;
+                        case 'new':
+                            return $this->new_goods();
+                            break;
+                        case 'help':
+                            return $this->help();
                             break;
                         default:
                             return $this->default_msg();
@@ -41,17 +49,24 @@ class ApiController extends Controller
         });
 
         //语音回复
-
         $server->on('message', 'voice', function ($message) {
             switch ($message->Recognition) {
                 //人气商品
                 case '人气商品！':
-                    return $this->rq();
+                    return $this->best();
                     break;
 
                 //热门商品
-                case 'hot':
+                case '热门商品！':
                     return $this->hot();
+                    break;
+
+                case '最新商品！':
+                    return $this->new_goods();
+                    break;
+
+                case '帮助！':
+                    return $this->help();
                     break;
 
                 default:
@@ -60,18 +75,21 @@ class ApiController extends Controller
             }
         });
 
+        //文字回复
         $server->on('message', 'text', function ($message) {
             switch ($message->Content) {
-                //人气商品
-                case 'rq':
-                    return $this->rq();
+                case 'best':
+                    return $this->best();
                     break;
-
-                //热门商品
                 case 'hot':
                     return $this->hot();
                     break;
-
+                case 'new':
+                    return $this->new_goods();
+                    break;
+                case 'help':
+                    return $this->help();
+                    break;
                 default:
                     return $this->default_msg();
                     break;
@@ -83,13 +101,13 @@ class ApiController extends Controller
     }
 
     //查询人气商品
-    private function rq()
+    private function best()
     {
         $news = Message::make('news')->items(function () {
-            $goods = Good::where('hot', true)->get();
+            $goods = Good::where('best', true)->get();
             $info = array();
             foreach ($goods as $good) {
-                $info[] = Message::make('news_item')->title($good->name)->picUrl('http://wyshop.whphp.com/' . $good->thumb);
+                $info[] = Message::make('news_item')->title($good->name)->url(url('good', [$good->id]))->picUrl('http://wyshop.whphp.com/' . $good->thumb);
             }
             return $info;
         });
@@ -99,7 +117,37 @@ class ApiController extends Controller
     //查询热门商品
     private function hot()
     {
-        return Message::make('text')->content('热门商品！');
+        $news = Message::make('news')->items(function () {
+            $goods = Good::where('hot', true)->get();
+            $info = array();
+            foreach ($goods as $good) {
+                $info[] = Message::make('news_item')->title($good->name)->url(url('good', [$good->id]))->picUrl('http://wyshop.whphp.com/' . $good->thumb);
+            }
+            return $info;
+        });
+        return $news;
+    }
+
+    //查询最新商品
+    private function new_goods()
+    {
+        $news = Message::make('news')->items(function () {
+            $goods = Good::where('new', true)->get();
+            $info = array();
+            foreach ($goods as $good) {
+                $info[] = Message::make('news_item')->title($good->name)->url(url('good', [$good->id]))->picUrl('http://wyshop.whphp.com/' . $good->thumb);
+            }
+            return $info;
+        });
+        return $news;
+    }
+
+
+
+    private function help()
+    {
+        $msg = "回复best，显示人气商品\n回复new，显示最新商品\n回复hot，显示热门商品";
+        return Message::make('text')->content($msg);
     }
 
     //默认消息

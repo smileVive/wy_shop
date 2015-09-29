@@ -33,7 +33,7 @@ class GoodController extends Controller
 
     public function index()
     {
-        $goods = Good::orderBy('created_at', 'desc')->paginate(config('wyshop.page_size'));
+        $goods = Good::with('category')->orderBy('created_at', 'desc')->paginate(config('wyshop.page_size'));
         return view('admin.good.index', ['goods' => $goods]);
     }
 
