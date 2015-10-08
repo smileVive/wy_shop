@@ -14,19 +14,22 @@
     <link rel="stylesheet" href="{{ asset('amaze/css/app.css') }}"/>
     <link rel='stylesheet' href='{{ asset('NProgress/nprogress.css') }}'/>
     <style>
-        .am-tabs-d2 .am-tabs-nav>.am-active:after{
+        .am-tabs-d2 .am-tabs-nav > .am-active:after {
             border-bottom-color: #6f5499;
         }
-        .am-tabs-d2 .am-tabs-nav>.am-active{
+
+        .am-tabs-d2 .am-tabs-nav > .am-active {
             border-bottom: 2px solid #6f5499;
         }
+
         .am-navbar-default .am-navbar-nav {
             background-color: #6f5499;
             background-image: linear-gradient(to bottom, #563d7c 0, #6f5499 100%);
             background-repeat: repeat-x;
             opacity: .9;
         }
-        .am-tabs-d2 .am-tabs-nav>.am-active a{
+
+        .am-tabs-d2 .am-tabs-nav > .am-active a {
             color: #563d7c;
         }
 
@@ -34,16 +37,19 @@
             height: 200px;
         }
 
-        .good_img{
+        .good_img {
             height: 260px;
         }
+
         .am-slider-c1 .am-control-nav li a.am-active {
             background-color: #6f5499;
         }
+
         [data-am-widget=tabs] {
             margin: 0px;
         }
-        .am-tabs-bd{
+
+        .am-tabs-bd {
             border: 0;
         }
 
@@ -55,7 +61,7 @@
 
 <!-- content start -->
 @yield('content')
-<!-- content end -->
+        <!-- content end -->
 
 <!-- Navbar -->
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
@@ -78,8 +84,10 @@
         </li>
         <li data-am-navbar-qrcode>
             <a href="###">
-                <span class="am-icon-shopping-cart"></span>
-                <span class="am-navbar-label">购物车</span>
+                <span class="am-icon-shopping-cart" style="display:inline-block;"></span>
+                <span class="am-badge am-badge-secondary am-round" id="cart_number">0</span>
+                <span class="am-navbar-label">购物车 </span>
+
             </a>
         </li>
         <li>

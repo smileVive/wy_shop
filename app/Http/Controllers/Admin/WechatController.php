@@ -26,7 +26,7 @@ class WechatController extends Controller
     //获取菜单
     public function get_menu()
     {
-        $menus = Cache::rememberForever('admin_wechat_menus', function () {
+        $menus = Cache::rememberForever('wyshop_admin_wechat_menus', function () {
             $menu = new Menu($this->app_id, $this->secret);
             return $menu->get();
         });
@@ -63,7 +63,7 @@ class WechatController extends Controller
         }
         // dd($target);
         $menu->set($target); // 失败会抛出异常
-        Cache::forget('admin_wechat_menus');
+        Cache::forget('wyshop_admin_wechat_menus');
         return back()->with('info', '您已成功设置菜单，请取消关注后，再重新关注~');
     }
 

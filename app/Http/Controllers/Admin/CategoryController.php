@@ -22,7 +22,7 @@ class CategoryController extends Controller
     //获取栏目信息
     private function get_categories()
     {
-        $categories = Cache::rememberForever('admin_category_categories', function () {
+        $categories = Cache::rememberForever('wyshop_admin_category_categories', function () {
             $categories = Category::orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
             return tree($categories);
         });
@@ -47,7 +47,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        Cache::forget('admin_category_categories');        //清除缓存
+        Cache::forget('wyshop_admin_category_categories');        //清除缓存
         //判断是否为空，数组去重复, 序列化
         $filter_attr = $request->filter_attr == "" ? "" : serialize(array_unique($request->filter_attr));
         //合并数组
@@ -77,7 +77,7 @@ class CategoryController extends Controller
 
         $category->update($data);
 
-        Cache::forget('admin_category_categories');
+        Cache::forget('wyshop_admin_category_categories');
         return redirect(route('admin.category.index'));
     }
 
@@ -97,7 +97,7 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        Cache::forget('admin_category_categories');
+        Cache::forget('wyshop_admin_category_categories');
         Category::destroy($id);
         return back()->with('info', '删除分类成功');
     }

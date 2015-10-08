@@ -9,6 +9,7 @@ use Cache;
 use App\Models\Category;
 use App\Models\Good;
 use App\Models\User;
+use App\Models\Cart;
 use Overtrue\Wechat\Auth;
 use Session;
 
@@ -24,7 +25,7 @@ class IndexController extends Controller
         $this->app_id = config('wechat.app_id');
         $this->secret = config('wechat.secret');
 
-        $this->check_login();
+//        $this->check_login();
     }
 
     //获取用户信息
@@ -43,12 +44,12 @@ class IndexController extends Controller
             if ($check->count() == 0) {
 
                 $user = User::create([
-                    'openid'=>$user_info->openid,
-                    'sex'=>$user_info->sex,
-                    'nickname'=>$user_info->nickname,
-                    'city'=>$user_info->city,
-                    'province'=>$user_info->province,
-                    'headimgurl'=>$user_info->headimgurl
+                    'openid' => $user_info->openid,
+                    'sex' => $user_info->sex,
+                    'nickname' => $user_info->nickname,
+                    'city' => $user_info->city,
+                    'province' => $user_info->province,
+                    'headimgurl' => $user_info->headimgurl
                 ]);
 
             } else {
@@ -97,6 +98,19 @@ class IndexController extends Controller
         $good = Good::with('good_galleries', 'comments.user')->find($good_id);
         return view('wechat.good', ['good' => $good]);
 
+    }
+
+    /**
+     * 购物车
+     * @return \Illuminate\View\View
+     */
+    public function cart()
+    {
+        //记得取session里当前用户的id
+//        $carts = Cart::with('good')->where('user_id','session')->get();
+
+        $carts = Cart::with('good')->get();
+        return view('wechat.cart', ['carts' => $carts]);
     }
 
 

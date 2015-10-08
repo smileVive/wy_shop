@@ -12,7 +12,7 @@
                 <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
                     <div class="am-u-sm-4 am-list-thumb">
                         <a href="{{url('good', [$good->id])}}" class="">
-                            <img src="{{$good->thumb}}" alt="我很囧，你保重....晒晒旅行中的那些囧！"/>
+                            <img src="{{$good->thumb}}" alt="{{$good->name}}"/>
                         </a>
                     </div>
 

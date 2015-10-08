@@ -46,6 +46,7 @@ Route::group(['namespace' => 'Wechat'], function () {
     Route::get('category', 'IndexController@category');
     Route::get('category/{category_id}', 'IndexController@good_list');
     Route::get('good/{good_id}', 'IndexController@good');
+    Route::get('cart', 'IndexController@cart');
 });
 
 

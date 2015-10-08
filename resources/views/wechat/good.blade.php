@@ -30,6 +30,52 @@
             padding: 0 10px;
         }
 
+        .option .btn-del {
+            background-position: 10px -20px;
+        }
+
+        .btn-add, .btn-del {
+            overflow: hidden;
+            text-indent: -200px;
+            background: url({{asset('img/shp-cart-icon-sprites.png')}}) no-repeat -15px -20px;
+            background-size: 50px 100px;
+        }
+
+        .btn-add, .btn-del, .fm-txt {
+            border: solid #ccc;
+            float: left;
+            width: 32px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+        }
+
+        .btn-del {
+            border-width: 1px 0 1px 1px;
+            border-radius: 3px 0 0 3px;
+            font-size: 20px;
+        }
+
+        .btn-add {
+            border-width: 1px 1px 1px 0;
+            border-radius: 0 3px 3px 0;
+            font-size: 20px;
+        }
+
+        .fm-txt {
+            border-width: 1px;
+            font-size: 16px;
+            border-radius: 0;
+            -webkit-appearance: none;
+            backgroumd-color: #fff;
+        }
+
+        .select {
+            position: relative;
+            top: -48px;
+            left: 80px;
+        }
+
     </style>
 @stop
 @section('content')
@@ -70,13 +116,28 @@
 
                 <div data-am-widget="titlebar" class="am-titlebar am-titlebar-multi">
                     <h2 class="am-titlebar-title">
-                        库存：{{$good->number}}
+                        库存：<span id="number">{{$good->number}}</span>
                     </h2>
+                </div>
+
+                <div data-am-widget="titlebar" class="am-titlebar am-titlebar-multi">
+                    <h2 class="am-titlebar-title">
+
+                        数量：
+                        <section class="select">
+                            <p class="option">
+                                <a class="btn-del" id="minus" onclick="minus();">-</a>
+                                <input type="text" class="fm-txt" value="1" id="num" onblur="modify();">
+                                <a class="btn-add" id="plus" onclick="plus();">+</a>
+                            </p>
+                        </section>
+                    </h2>
+
                 </div>
 
                 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
                 <div style="padding:0 10px 10px;">
-                    <button type="button" class="am-btn am-btn-lg am-btn-success am-radius am-btn-block">
+                    <button type="button" class="am-btn am-btn-lg am-btn-success am-radius am-btn-block" id="add_cart">
                         <i class="am-icon-shopping-cart"></i>
                         加入购物车
                     </button>
@@ -94,14 +155,16 @@
                         @foreach($good->comments as $comment)
                             <article class="am-comment">
                                 <a href="#link-to-user-home">
-                                    <img src="{{$comment->user->headimgurl}}" alt="" class="am-comment-avatar" width="48" height="48"/>
+                                    <img src="{{$comment->user->headimgurl}}" alt="" class="am-comment-avatar"
+                                         width="48" height="48"/>
                                 </a>
 
                                 <div class="am-comment-main">
                                     <header class="am-comment-hd">
                                         <!--<h3 class="am-comment-title">评论标题</h3>-->
                                         <div class="am-comment-meta">
-                                            <a href="#link-to-user" class="am-comment-author">{{$comment->user->nickname}}</a>
+                                            <a href="#link-to-user"
+                                               class="am-comment-author">{{$comment->user->nickname}}</a>
                                             于 {{$comment->created_at}} 对 {{$good->name}} 发表评论
                                         </div>
                                     </header>
@@ -119,15 +182,78 @@
         </div>
     </div>
 
+    <div class="am-modal am-modal-alert" tabindex="-1" id="cart_msg">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">提示信息</div>
+            <div class="am-modal-bd">
+                恭喜，已添至购物车~
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn">确定</span>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('js')
 
     <script>
+
+        var num = $("#num");
+        function minus() {
+            if (num.val() != 1) {
+                var number = parseInt(num.val()) - 1;
+                num.val(number);
+            }
+        }
+
+        function modify() {
+            if (parseInt(num.val()) < 1) {
+                num.val(1);
+            }
+            num.val(parseInt(num.val()));
+        }
+
+        function plus() {
+            var number = parseInt(num.val()) + 1;
+            num.val(number);
+        }
+
         $(function () {
             $('#info').click(function () {
                 $(".am-tabs").tabs('open', 1);
             })
+
+            $("#add_cart").click(function () {
+                //库存
+                var number = parseInt($("#number").text());
+                //用户购买数量
+                var num = parseInt($("#num").val());
+
+                if (number == 0) {
+                    alert('商品数量不足，不能购买！');
+                }
+
+                //如果用户购买数，大于库存
+                if (num > number) {
+                    var cart_number = number;
+                } else {
+                    cart_number = num;
+                }
+
+                //修改购物车数量
+                cart_number = parseInt($("#cart_number").text()) + cart_number;
+                $("#cart_number").text(cart_number);
+
+                $('#cart_msg').modal();
+                setTimeout(function () {
+                    $('#cart_msg').modal('close');
+                }, 600)
+
+                return false;
+            })
+
         })
     </script>
 @stop

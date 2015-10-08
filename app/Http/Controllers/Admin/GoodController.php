@@ -24,7 +24,7 @@ class GoodController extends Controller
 
     private function get_categories()
     {
-        $categories = Cache::rememberForever('admin_category_categories', function () {
+        $categories = Cache::rememberForever('wyshop_admin_category_categories', function () {
             $categories = Category::orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
             return tree($categories);
         });
@@ -43,11 +43,20 @@ class GoodController extends Controller
         $categories = $this->get_categories();
 
         $types = Type::with('attributes')->get();
-        return view('admin.good.create', ['brands' => $brands, 'categories' => $categories, 'types' => $types, '_new_good'=> 'am-active', '_goods'=>'']);
+        return view('admin.good.create', ['brands' => $brands, 'categories' => $categories, 'types' => $types, '_new_good' => 'am-active', '_goods' => '']);
     }
 
     public function store(Request $request)
     {
+        $messages = [
+            'name.required' => '商品名称不能为空！',
+            'category_id.required' => '商品分类不能为空！'
+        ];
+        $this->validate($request, [
+            'name' => 'required',
+            'category_id' => 'required'
+        ], $messages);
+
         //新增商品
         $good = Good::create($request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']));
 
@@ -88,9 +97,25 @@ class GoodController extends Controller
 
     public function update(Request $request, $id)
     {
-//        return $request->all();
+        $messages = [
+            'name.required' => '商品名称不能为空！',
+            'category_id.required' => '商品分类不能为空！'
+        ];
+        $this->validate($request, [
+            'name' => 'required',
+            'category_id' => 'required'
+        ], $messages);
+
         $good = Good::find($id);
-        $good->update($request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']));
+
+        $result = $request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']);
+        //如果checkbox未选中，设置为false
+        $result = isset($request->best) ? $result : array_add($result, 'best', false);
+        $result = isset($request->new) ? $result : array_add($result, 'new', false);
+        $result = isset($request->hot) ? $result : array_add($result, 'hot', false);
+        $result = isset($request->onsale) ? $result : array_add($result, 'onsale', false);
+
+        $good->update($result);
 
         //增加属性
         if ($request->attr_id_list) {
@@ -130,7 +155,7 @@ class GoodController extends Controller
     public function trash()
     {
         $goods = Good::onlyTrashed()->paginate(config('wyshop.page_size'));
-        return view('admin.good.trash', ['goods' => $goods, '_trash'=> 'am-active', '_goods'=>'']);
+        return view('admin.good.trash', ['goods' => $goods, '_trash' => 'am-active', '_goods' => '']);
     }
 
     public function restore($id)

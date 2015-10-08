@@ -28,17 +28,12 @@
                 <div class="am-tabs-bd">
                     <div class="am-tab-panel am-fade am-in am-active" id="tab1">
 
-
-
-
-
-
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">
                                 商品名称
                             </div>
                             <div class="am-u-sm-8 am-u-md-4">
-                                <input type="text" class="am-input-sm" name="name">
+                                <input type="text" class="am-input-sm" name="name" value="{{ old('name') }}">
                             </div>
                             <div class="am-hide-sm-only am-u-md-6">*必填</div>
                         </div>
