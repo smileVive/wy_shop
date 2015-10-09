@@ -185,8 +185,8 @@
     <div class="am-modal am-modal-alert" tabindex="-1" id="cart_msg">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">提示信息</div>
-            <div class="am-modal-bd">
-                恭喜，已添至购物车~
+            <div class="am-modal-bd msg">
+
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn">确定</span>
@@ -225,6 +225,7 @@
                 $(".am-tabs").tabs('open', 1);
             })
 
+            //增加到购物车
             $("#add_cart").click(function () {
                 //库存
                 var number = parseInt($("#number").text());
@@ -235,21 +236,36 @@
                     alert('商品数量不足，不能购买！');
                 }
 
-                //如果用户购买数，大于库存
-                if (num > number) {
-                    var cart_number = number;
-                } else {
-                    cart_number = num;
+                var data = {
+                    num: num,
+                    good_id: {{$good->id}}
                 }
 
-                //修改购物车数量
-                cart_number = parseInt($("#cart_number").text()) + cart_number;
-                $("#cart_number").text(cart_number);
 
-                $('#cart_msg').modal();
-                setTimeout(function () {
-                    $('#cart_msg').modal('close');
-                }, 600)
+                $.post('/cart', data, function (data) {
+
+                    $(".msg").html(data.info);
+                    $('#cart_msg').modal();
+
+                    if (data.status == 1) {
+                        $("#cart_number").text(data.cart_number);
+
+                        setTimeout(function () {
+                            $('#cart_msg').modal('close');
+                        }, 600)
+                    }
+
+                }, "json");
+
+
+                //修改购物车数量
+//                cart_number = parseInt($("#cart_number").text()) + cart_number;
+//                $("#cart_number").text(cart_number);
+//
+//                $('#cart_msg').modal();
+//                setTimeout(function () {
+//                    $('#cart_msg').modal('close');
+//                }, 600)
 
                 return false;
             })

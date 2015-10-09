@@ -53,6 +53,7 @@
     <div data-am-widget="list_news" class="am-list-news am-list-news-default">
         <div class="am-list-news-bd">
             <ul class="am-list">
+
                 @foreach($carts as $cart)
                         <!--缩略图在标题左边-->
                 <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
@@ -75,7 +76,7 @@
                             <section class="select">
                                 <p class="option">
                                     <a class="btn-del" id="minus" onclick="minus();">-</a>
-                                    <input type="text" class="fm-txt" value="1" id="num" onblur="modify();">
+                                    <input type="text" class="fm-txt" value="{{$cart->num}}" id="num" onblur="modify();">
                                     <a class="btn-add" id="plus" onclick="plus();">+</a>
                                 </p>
                             </section>
@@ -90,7 +91,7 @@
 
                 <li class="am-g">
                     <a class="am-list-item-hd ">
-                        小计：￥999.00
+                        小计：￥<span class="total_price">{{number_format($total_price, 2)}}</span>
                     </a>
                 </li>
             </ul>

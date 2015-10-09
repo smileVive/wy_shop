@@ -82,16 +82,16 @@
                 <span class="am-navbar-label">分类</span>
             </a>
         </li>
-        <li data-am-navbar-qrcode>
-            <a href="###">
+        <li>
+            <a href="/cart">
                 <span class="am-icon-shopping-cart" style="display:inline-block;"></span>
-                <span class="am-badge am-badge-secondary am-round" id="cart_number">0</span>
+                <span class="am-badge am-badge-secondary am-round" id="cart_number">{{$cart_number}}</span>
                 <span class="am-navbar-label">购物车 </span>
 
             </a>
         </li>
         <li>
-            <a href="https://github.com/allmobilize/amazeui">
+            <a href="/account">
                 <span class="am-icon-user"></span>
                 <span class="am-navbar-label">我的</span>
             </a>
