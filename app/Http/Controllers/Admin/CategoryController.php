@@ -23,7 +23,7 @@ class CategoryController extends Controller
     private function get_categories()
     {
         $categories = Cache::rememberForever('wyshop_admin_category_categories', function () {
-            $categories = Category::orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
+            $categories = Category::with('goods')->orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
             return tree($categories);
         });
         return $categories;

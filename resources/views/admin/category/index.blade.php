@@ -53,7 +53,7 @@
                                 {!! category_indent($category->count) !!}
                                 {{ $category->name }}
                             </td>
-                            <td>1</td>
+                            <td>{{$category->goods->count()}}</td>
                             <td class="am-hide-sm-only">
                                 @if($category->show_in_nav == true)
                                     <span class="am-icon-check"></span>
