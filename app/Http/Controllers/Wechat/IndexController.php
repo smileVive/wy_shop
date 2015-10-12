@@ -11,7 +11,10 @@ use App\Models\Good;
 use App\Models\User;
 use App\Models\Cart;
 use Overtrue\Wechat\Auth;
-
+use Overtrue\Wechat\Payment;
+use Overtrue\Wechat\Payment\Order;
+use Overtrue\Wechat\Payment\Business;
+use Overtrue\Wechat\Payment\UnifiedOrder;
 
 class IndexController extends Controller
 {
@@ -24,6 +27,7 @@ class IndexController extends Controller
     {
         $this->app_id = config('wechat.app_id');
         $this->secret = config('wechat.secret');
+
 
         $this->check_login();
         $this->user = session()->get('user');
@@ -40,19 +44,14 @@ class IndexController extends Controller
     //获取用户信息
     private function check_login()
     {
-        //如果session中没有用户信息
+
         if (!session()->has('user')) {
-
-            $user = User::find(8);
-            session()->put('user', $user);
-            return;
-
             //获取用户信息
             $auth = new Auth($this->app_id, $this->secret);
             $user_info = $auth->authorize($to = null, $scope = 'snsapi_userinfo', $state = 'STATE');
 
 
-            $check = User::where("openid", $user_info->openid)->get();
+            $check = User::where("openid", $user_info->openid)->first();
 
             //如果数据库没有用户记录，存入数据库
             if ($check->count() == 0) {
@@ -172,6 +171,59 @@ class IndexController extends Controller
     public function account()
     {
         return view('wechat.account');
+    }
+
+    //微信支付
+    public function pay()
+    {
+        $business = new Business(
+            $this->app_id,							// APP_ID,
+            '13e1c42de4b27e00892faf1f226c3145',		// AppSecret,
+            1230390602,								// 微信支付商户号,
+            '1123325aedfafqr34234123421wqerwq'		// api秘钥
+        );
+
+
+        /**
+         * 第 2 步：定义订单
+         */
+        $order = new Order();
+        $order->body = '长乐商城订单';
+        $order->out_trade_no = md5(uniqid().microtime());
+        $order->total_fee = '1';    // 单位为 “分”, 字符串类型
+        $order->openid = session()->get('user')->openid;
+
+        $order->notify_url = 'http://wyshop.whphp.comcom/wechat';
+
+        /**
+         * 第 3 步：统一下单
+         */
+        $unifiedOrder = new UnifiedOrder($business, $order);
+        /**
+         * 第 4 步：生成支付配置文件
+         */
+        $payment = new Payment($unifiedOrder);
+        // return $payment->getConfig();
+        return view('wechat.pay')->with('config', $payment->getConfig());
+    }
+
+    public function notify(){
+        $notify = new Notify(
+            $this->app_id,							// APP_ID,
+            '13e1c42de4b27e00892faf1f226c3145',		// AppSecret,
+            1230390602,								// 微信支付商户号,
+            '1123325aedfafqr34234123421wqerwq'		// api秘钥
+        );
+
+        $transaction = $notify->verify();
+
+        if (!$transaction) {
+            $notify->reply('FAIL', 'verify transaction error');
+        }
+
+        //修改订单状态
+
+        echo $notify->reply();
     }
 
 }

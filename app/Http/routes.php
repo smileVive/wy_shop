@@ -49,6 +49,8 @@ Route::group(['namespace' => 'Wechat'], function () {
     Route::get('cart', 'IndexController@cart');
     Route::post('cart', 'IndexController@add_cart');
     Route::get('account', 'IndexController@account');
+    Route::get('pay', 'IndexController@pay');
+    Route::any('notify', 'IndexController@notify');
 });
 
 

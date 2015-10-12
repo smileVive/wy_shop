@@ -98,10 +98,10 @@
         </div>
 
         <div style="padding:0 10px 10px;">
-            <button type="button" class="am-btn am-btn-lg am-btn-danger am-radius am-btn-block" id="add_cart">
+            <a href="/pay" type="button" class="am-btn am-btn-lg am-btn-danger am-radius am-btn-block" id="add_cart">
                 <i class="am-icon-shopping-cart"></i>
                 结算
-            </button>
+            </a>
         </div>
 
 
