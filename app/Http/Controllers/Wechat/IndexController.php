@@ -54,7 +54,7 @@ class IndexController extends Controller
             $check = User::where("openid", $user_info->openid)->first();
 
             //如果数据库没有用户记录，存入数据库
-            if ($check->count() == 0) {
+            if (!$check) {
 
                 $user = User::create([
                     'openid' => $user_info->openid,
@@ -190,7 +190,7 @@ class IndexController extends Controller
         $order = new Order();
         $order->body = '长乐商城订单';
         $order->out_trade_no = md5(uniqid().microtime());
-        $order->total_fee = '1';    // 单位为 “分”, 字符串类型
+        $order->total_fee = '100';    // 单位为 “分”, 字符串类型
         $order->openid = session()->get('user')->openid;
 
         $order->notify_url = 'http://wyshop.whphp.comcom/wechat';
