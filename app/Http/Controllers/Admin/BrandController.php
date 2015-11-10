@@ -57,7 +57,7 @@ class BrandController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = $request->keyword . "%";
+        $keyword = "%" . $request->keyword . "%";
         $brands = Brand::orderBy('sort_order')->where('name', 'like', $keyword)->paginate(config('wyshop.page_size'));
 
         return view('admin.brand.index', ['brands' => $brands]);

@@ -20,7 +20,7 @@ function category_indent($count)
 {
     $space = "";
     for ($i = 1; $i < $count; $i++) {
-        $space .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+        $space .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     }
     return $space;
 }

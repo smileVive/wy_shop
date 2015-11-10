@@ -38,11 +38,11 @@ class UploadController extends Controller
             $date = date("Y_m");
             $path = getcwd().'/uploads/image/'.$date;
             if(!is_dir($path)) {
-                mkdir($path);
+                mkdir($path, 0777, true);
             }
 
             //生成新文件名
-            $extension = $request->file('Filedata')->getClientOriginalExtension();
+            $extension = $request->file('Filedata')->getClientOriginalExtension();      //取得之前文件的扩展名
 
             $file_name = date("YmdHis") . '_' . rand(10000, 99999) . '.' . $extension;
             $request->file('Filedata')->move($path, $file_name);

@@ -22,8 +22,15 @@ class CategoryController extends Controller
     //获取栏目信息
     private function get_categories()
     {
+//        if (!Cache::has('wyshop_admin_category_categories')) {
+//            $categories = Category::orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
+//            Cache::forever('wyshop_admin_category_categories', tree($categories));
+//        }
+//        return Cache::get('wyshop_admin_category_categories');
+
+
         $categories = Cache::rememberForever('wyshop_admin_category_categories', function () {
-            $categories = Category::with('goods')->orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
+            $categories = Category::orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
             return tree($categories);
         });
         return $categories;
