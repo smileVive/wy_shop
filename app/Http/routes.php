@@ -40,18 +40,18 @@ Route::post('upload', 'UploadController@store');
 
 //微信接口
 
-Route::group(['namespace' => 'Wechat'], function () {
-    Route::any('/wechat_api', 'ApiController@serve');
-    Route::get('/', 'IndexController@index');
-    Route::get('category', 'IndexController@category');
-    Route::get('category/{category_id}', 'IndexController@good_list');
-    Route::get('good/{good_id}', 'IndexController@good');
-    Route::get('cart', 'IndexController@cart');
-    Route::post('cart', 'IndexController@add_cart');
-    Route::get('account', 'IndexController@account');
-    Route::get('pay', 'IndexController@pay');
-    Route::any('notify', 'IndexController@notify');
-});
+//Route::group(['namespace' => 'Wechat'], function () {
+//    Route::any('/wechat_api', 'ApiController@serve');
+//    Route::get('/', 'IndexController@index');
+//    Route::get('category', 'IndexController@category');
+//    Route::get('category/{category_id}', 'IndexController@good_list');
+//    Route::get('good/{good_id}', 'IndexController@good');
+//    Route::get('cart', 'IndexController@cart');
+//    Route::post('cart', 'IndexController@add_cart');
+//    Route::get('account', 'IndexController@account');
+//    Route::get('pay', 'IndexController@pay');
+//    Route::any('notify', 'IndexController@notify');
+//});
 
 
 //后台  , 'middleware' => 'auth'
@@ -71,8 +71,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['csr
 
     //商品属性，需要加入商品类型的id
     Route::group(['prefix' => 'type/{type_id}'], function () {
-        Route:
-        delete('del_all', [
+        Route:delete('del_all', [
             'as' => 'admin.type.{type_id}.attribute.del_all', 'uses' => 'AttributeController@del_all'
         ]);
         Route::resource('attribute', 'AttributeController', ['except' => ['show']]);

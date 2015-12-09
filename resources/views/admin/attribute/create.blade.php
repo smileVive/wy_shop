@@ -65,7 +65,7 @@
                 可选值列表
             </div>
             <div class="am-u-sm-12 am-u-md-10">
-                <textarea rows="10" name="value"></textarea>
+                <textarea rows="10" name="value" disabled></textarea>
             </div>
         </div>
 
@@ -74,9 +74,6 @@
             <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
         </div>
     </form>
-
-
-
 </div>
 @stop
 
@@ -84,7 +81,14 @@
 @section('js')
 <script>
 $(function() {
-
+    $("input[name=input_type]").click(function(){
+        var value = $(this).val();
+        if(value == 0){
+            $("textarea").prop("disabled", true);
+        } else {
+            $("textarea").prop("disabled", false);
+        }
+    })
 });
 </script>
 @stop

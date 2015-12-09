@@ -51,7 +51,7 @@ class BrandController extends Controller
     public function destroy($id)
     {
         Brand::destroy($id);
-        return back()->with('info', '删除品牌成功~');;
+        return back()->with('info', '删除品牌成功~');
     }
 
 

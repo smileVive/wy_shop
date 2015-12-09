@@ -15,12 +15,11 @@ class CreateAttributesTable extends Migration
         Schema::create('attributes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('type_id');
-
             $table->string('name');
             $table->tinyInteger('attr_type');
             $table->tinyInteger('input_type');
+            $table->tinyInteger('sort_order');
             $table->text('value');
-
             $table->timestamps();
         });
     }

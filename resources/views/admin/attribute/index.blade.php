@@ -70,10 +70,8 @@
                             <td>
                                 @if ($attribute->input_type == 0)
                                     手工录入
-                                @elseif ($attribute->input_type == 1)
+                                @else ($attribute->input_type == 1)
                                     从列表中选择
-                                @else
-                                    多行文本框
                                 @endif
                             </td>
                             <td>
@@ -136,7 +134,7 @@
                 data : del_all,
                 dataType: "json",
                 success : function(data){
-                    // console.log(data);
+                     console.log(data);
                     location.href=location.href;
                 }
             });

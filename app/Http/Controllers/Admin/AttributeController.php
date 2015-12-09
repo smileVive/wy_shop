@@ -20,6 +20,8 @@ class AttributeController extends Controller
     {
         $types = Type::all();
         $attributes = Attribute::with('type')->where('type_id', $type_id)->paginate(config('wyshop.page_size'));
+//        return $attributes;
+
         return view('admin.attribute.index', ['types' => $types, 'type_id' => $type_id, 'attributes' => $attributes]);
     }
 
@@ -61,7 +63,7 @@ class AttributeController extends Controller
 
     public function del_all(Request $request, $type_id)
     {
-        // return $request->all();
+//         return $request->all();
         Attribute::destroy($request->del_all);
     }
 }
