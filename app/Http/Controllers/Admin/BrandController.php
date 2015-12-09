@@ -30,6 +30,17 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
+        $messages = [
+            'name.required' => '品牌名称不能为空！',
+            'url.required' => '品牌网址不能为空！',
+            'url.url' => '品牌网址格式不正确！'
+        ];
+
+        $this->validate($request, [
+            'name' => 'required',
+            'url' => 'required|url',
+        ], $messages);
+
         Brand::create($request->all());
         return redirect(route('admin.brand.index'))->with('info', '新增品牌成功~');
     }
