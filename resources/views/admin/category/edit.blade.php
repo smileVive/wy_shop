@@ -69,7 +69,7 @@
         </div>
 
 
-        @if($category->filter_attr->isEmpty())
+        @if(!$category->filter_attr)
             <div class="am-g am-margin-top filter">
                 <div class="am-u-md-3 am-u-md-offset-2">
                     <select data-am-selected="{btnWidth: '100%', btnStyle: 'primary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"

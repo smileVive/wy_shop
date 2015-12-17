@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Attribute;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -37,6 +38,65 @@ class GoodController extends Controller
         return view('admin.good.index', ['goods' => $goods]);
     }
 
+
+    //选择类型,生成对应的html表单
+    public function select_type(Request $request)
+    {
+
+        $type_id = $request->type_id;
+        $attributes = Attribute::where("type_id", $type_id)->get();
+
+
+        //定义一个数组,保存对应生成html表单的函数名称
+        $build_html = array(
+            'build_input_only' => array(0, 0),
+            'build_input_check' => array(0, 1),
+            'build_select_only' => array(1, 0),
+            'build_select_check' => array(1, 1)
+        );
+
+        $form = "";
+        foreach ($attributes as $a) {
+            $para = array($a->input_type, $a->attr_type);
+            $function = array_search($para, $build_html);
+
+            //调用对应的函数,生成表单
+            $form .= call_user_func($function, $a);
+//            //如果是输入类型是input框,分别去生成
+//            if ($a->input_type == 0) {
+//                if ($a->attr_type == 0) {
+//                    $form .= build_input_only($a);
+//                } else {
+//                    $form .= build_input_check($a);
+//                }
+//            } else {
+//                //如果是下拉列表,也分别去生成
+//                if ($a->attr_type == 0) {
+//                    $form .= build_select_only($a);
+//                } else {
+//                    $form .= build_select_check($a);
+//                }
+//            }
+        }
+        return $form;
+    }
+
+
+    //增加新的input
+    public function add_form(Request $request)
+    {
+        $form = "";
+        $id = $request->attr_id;
+        $attribute = Attribute::find($id);
+        if ($attribute->input_type == 1) {
+            $form = add_select_check($attribute);
+        } else {
+            $form = add_input_check($attribute);
+        }
+        return $form;
+    }
+
+
     public function create()
     {
         $brands = Brand::orderBy('sort_order')->get();
@@ -57,8 +117,9 @@ class GoodController extends Controller
             'category_id' => 'required'
         ], $messages);
 
+
         //新增商品
-        $good = Good::create($request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']));
+        $good = Good::create($request->except(['file', 'imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']));
 
         //增加属性
         if ($request->attr_id_list) {
@@ -80,6 +141,7 @@ class GoodController extends Controller
                 $good_gallery->img = $img;
                 $good_gallery->save();
             }
+
         }
 
         return redirect(route('admin.good.index'))->with('info', '添加商品成功');

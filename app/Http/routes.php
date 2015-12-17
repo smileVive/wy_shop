@@ -71,7 +71,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['csr
 
     //商品属性，需要加入商品类型的id
     Route::group(['prefix' => 'type/{type_id}'], function () {
-        Route:delete('del_all', [
+        Route::delete('del_all', [
             'as' => 'admin.type.{type_id}.attribute.del_all', 'uses' => 'AttributeController@del_all'
         ]);
         Route::resource('attribute', 'AttributeController', ['except' => ['show']]);
@@ -83,6 +83,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['csr
 
     //商品管理
     Route::group(['prefix' => 'good'], function () {
+        Route::get('/select_type', 'GoodController@select_type');
+        Route::get('/select_type/add_form', 'GoodController@add_form');
+
         Route::get('/trash', 'GoodController@trash');
         Route::get('/{good}/restore', [
             'as' => 'admin.good.restore', 'uses' => 'GoodController@restore'

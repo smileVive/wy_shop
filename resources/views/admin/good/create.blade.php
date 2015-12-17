@@ -207,7 +207,7 @@
 
         var types = {!! $types !!};
     </script>
-    <script src="{{ asset('js/create_good.js') }}"></script>
+    <script src="{{ asset('js/good.js') }}"></script>
 
     <script type="text/javascript" src="{{asset('webupload/dist/webuploader.js')}}"></script>
     <script type="text/javascript" src="{{asset('webupload/upload.js')}}"></script>

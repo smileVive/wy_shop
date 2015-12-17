@@ -40,6 +40,10 @@ class CategoryController extends Controller
     public function index()
     {
         //查询栏目，并存入缓存
+
+
+//        $categories = Category::orderBy('parent_id', 'asc')->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
+
         $categories = $this->get_categories();
         return view('admin.category.index', ['categories' => $categories]);
     }
@@ -54,11 +58,14 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+
+
         Cache::forget('wyshop_admin_category_categories');        //清除缓存
         //判断是否为空，数组去重复, 序列化
         $filter_attr = $request->filter_attr == "" ? "" : serialize(array_unique($request->filter_attr));
         //合并数组
         $category = array_add($request->except('filter_attr'), 'filter_attr', $filter_attr);
+        return $category;
 
         Category::create($category);
         return redirect(route('admin.category.index'))->with('info', '添加分类成功');
@@ -71,7 +78,9 @@ class CategoryController extends Controller
         $category = Category::find($id);
 
         //将筛选数据重新插回当前栏目中
-        $category->filter_attr = Attribute::with('type.attributes')->whereIn('id', unserialize($category->filter_attr))->get();
+        if ($category->filter_attr) {
+            $category->filter_attr = Attribute::with('type.attributes')->whereIn('id', unserialize($category->filter_attr))->get();
+        }
 
         return view('admin.category.edit', ['category' => $category, 'categories' => $categories, 'types' => $types]);
     }

@@ -1,4 +1,10 @@
 <?php
+function p($array)
+{
+    echo "<pre>";
+    print_r($array);
+    echo "</pre>";
+}
 
 //无限极分类
 function tree(&$data, $parent_id = 0, $count = 1)
@@ -58,4 +64,178 @@ function express_info()
     }
 
     print_r($get_content . '<br/>' . $powered);
+}
+
+
+
+
+
+//商品属性部分,生成表单
+//唯一input,没有删除按钮,没有价格
+function build_input_only($a)
+{
+
+
+    $html = '<div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">' . $a->name . '</div>
+                    <input type="hidden" name="attr_id_list[]" value="' . $a->id . '">
+                    <input type="hidden" name="attr_price_list[]" value="">
+                    <div class="am-u-sm-2 am-u-md-2 am-u-end">
+                        <input type="text" class="am-input-sm" name="attr_value_list[]">
+                    </div>
+                </div>';
+
+    return $html;
+}
+
+//单选input,有价格,可以增加
+function build_input_check($a)
+{
+
+    $html = '<div class="am-g am-margin-top">
+                    <div class="am-u-md-2 am-text-right">' . $a->name . '</div>
+                    <div class="am-u-md-10">
+                        <button type="button" class="am-btn am-btn-warning am-round add_attribute" data-id="'.$a->id.'"
+                            <span class="am-icon-plus"> 新增</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-md-2 am-u-md-offset-2">
+                        <input type="hidden" name="attr_id_list[]" value="' . $a->id . '">
+                        <input type="text" class="am-input-sm" name="attr_value_list[]">
+                    </div>
+
+
+                    <div class="am-u-md-2">
+                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格">
+                    </div>
+                    <div class="am-u-md-2 am-u-end col-end">
+                        <button type="button" class="am-btn am-btn-danger am-round trash0">
+                            <span class="am-icon-trash"> 删除</span>
+                        </button>
+                    </div>
+                </div>';
+    return $html;
+}
+
+//动态增加表单
+function add_input_check($a)
+{
+
+    $html = '
+                <div class="am-g am-margin-top">
+                    <div class="am-u-md-2 am-u-md-offset-2">
+                        <input type="hidden" name="attr_id_list[]" value="' . $a->id . '">
+                        <input type="text" class="am-input-sm" name="attr_value_list[]">
+                    </div>
+
+
+                    <div class="am-u-md-2">
+                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格">
+                    </div>
+                    <div class="am-u-md-2 am-u-end col-end">
+                        <button type="button" class="am-btn am-btn-danger am-round trash1">
+                            <span class="am-icon-trash"> 删除</span>
+                        </button>
+                    </div>
+                </div>';
+    return $html;
+}
+
+
+
+function build_select_only($a)
+{
+    $values = explode("\r\n", $a->value);
+
+    $options = "<option value=''>请选择...</option>";
+    foreach ($values as $v) {
+        $options .= '<option value="' . $v . '">' . $v . '</option>';
+    }
+    $html = '<div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">' . $a->name . '</div>
+                    <input type="hidden" name="attr_id_list[]" value="' . $a->id . '">
+                    <input type="hidden" name="attr_price_list[]" value="">
+
+                    <div class="am-u-sm-8 am-u-md-10">
+                        <select class="att_select" name="attr_value_list[]">
+                            ' . $options . '
+                        </select>
+                    </div>
+                </div>';
+    return $html;
+}
+
+function build_select_check($a)
+{
+
+    $values = explode("\r\n", $a->value);
+
+    $options = "<option value=''>请选择...</option>";
+    foreach ($values as $v) {
+        $options .= '<option value="' . $v . '">' . $v . '</option>';
+    }
+
+    $html = '<div class="am-g am-margin-top">
+                    <div class="am-u-md-2 am-text-right">' . $a->name . '</div>
+                    <div class="am-u-md-10">
+                        <button type="button" class="am-btn am-btn-warning am-round add_attribute" data-id="'.$a->id.'"
+                            <span class="am-icon-plus"> 新增</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="am-g am-margin-top">
+                    <div class="am-u-md-2 am-u-md-offset-2">
+                        <input type="hidden" name="attr_id_list[]" value="'. $a->id . '">
+                        <select class="att_select" name="attr_value_list[]">
+                            ' . $options . '
+                        </select>
+                    </div>
+
+                    <div class="am-u-md-2">
+                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格">
+                    </div>
+                    <div class="am-u-md-2 am-u-end col-end">
+                        <button type="button" class="am-btn am-btn-danger am-round trash0">
+                            <span class="am-icon-trash"> 删除</span>
+                        </button>
+                    </div>
+                </div>';
+    return $html;
+
+}
+
+
+function add_select_check($a, $value="")
+{
+
+    $values = explode("\r\n", $a->value);
+
+    $options = "<option value=''>请选择...</option>";
+    foreach ($values as $v) {
+        $options .= '<option value="' . $v . '">' . $v . '</option>';
+    }
+
+    $html = '
+                <div class="am-g am-margin-top">
+                    <div class="am-u-md-2 am-u-md-offset-2">
+                        <input type="hidden" name="attr_id_list[]" value="'. $a->id . '">
+                        <select class="att_select" name="attr_value_list[]">
+                            ' . $options . '
+                        </select>
+                    </div>
+
+                    <div class="am-u-md-2">
+                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格">
+                    </div>
+                    <div class="am-u-md-2 am-u-end col-end">
+                        <button type="button" class="am-btn am-btn-danger am-round trash1">
+                            <span class="am-icon-trash"> 删除</span>
+                        </button>
+                    </div>
+                </div>';
+    return $html;
+
 }
