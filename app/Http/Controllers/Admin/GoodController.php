@@ -181,7 +181,7 @@ class GoodController extends Controller
 
         $good = Good::find($id);
 
-        $result = $request->except(['imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']);
+        $result = $request->except(['file','imgs', 'attr_id_list', 'attr_value_list', 'attr_price_list']);
         //如果checkbox未选中，设置为false
         $result = isset($request->best) ? $result : array_add($result, 'best', false);
         $result = isset($request->new) ? $result : array_add($result, 'new', false);
