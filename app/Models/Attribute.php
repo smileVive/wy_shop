@@ -13,4 +13,9 @@ class Attribute extends Model
     {
         return $this->belongsTo('App\Models\Type');
     }
+
+    public function good_attrs()
+    {
+        return $this->hasMany('App\Models\Good_attr');
+    }
 }

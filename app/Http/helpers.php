@@ -67,15 +67,10 @@ function express_info()
 }
 
 
-
-
-
 //商品属性部分,生成表单
 //唯一input,没有删除按钮,没有价格
-function build_input_only($a)
+function build_input_only($a, $g = "")
 {
-
-
     $html = '<div class="am-g am-margin-top">
                     <div class="am-u-sm-4 am-u-md-2 am-text-right">' . $a->name . '</div>
                     <input type="hidden" name="attr_id_list[]" value="' . $a->id . '">
@@ -89,27 +84,35 @@ function build_input_only($a)
 }
 
 //单选input,有价格,可以增加
-function build_input_check($a)
+function build_input_check($a, $g = "", $num = true)
 {
 
-    $html = '<div class="am-g am-margin-top">
+    $html = "";
+    $attr_value = $g == "" ? "" : $g->attr_value;
+    $attr_price = $g == "" ? "" : $g->attr_price;
+
+
+
+    if ($num) {
+        $html .= '<div class="am-g am-margin-top">
                     <div class="am-u-md-2 am-text-right">' . $a->name . '</div>
                     <div class="am-u-md-10">
-                        <button type="button" class="am-btn am-btn-warning am-round add_attribute" data-id="'.$a->id.'"
+                        <button type="button" class="am-btn am-btn-warning am-round add_attribute" data-id="' . $a->id . '"
                             <span class="am-icon-plus"> 新增</span>
                         </button>
                     </div>
-                </div>
+                </div>';
+    }
 
-                <div class="am-g am-margin-top">
+    $html .= '<div class="am-g am-margin-top">
                     <div class="am-u-md-2 am-u-md-offset-2">
                         <input type="hidden" name="attr_id_list[]" value="' . $a->id . '">
-                        <input type="text" class="am-input-sm" name="attr_value_list[]">
+                        <input type="text" class="am-input-sm" name="attr_value_list[]" value="' . $attr_value . '">
                     </div>
 
 
                     <div class="am-u-md-2">
-                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格">
+                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格" value="' . $attr_price . '">
                     </div>
                     <div class="am-u-md-2 am-u-end col-end">
                         <button type="button" class="am-btn am-btn-danger am-round trash0">
@@ -120,20 +123,23 @@ function build_input_check($a)
     return $html;
 }
 
-//动态增加表单
-function add_input_check($a)
-{
 
+
+//动态增加表单
+function add_input_check($a, $g = "")
+{
+    $attr_value = $g == "" ? "" : $g->attr_value;
+    $attr_price = $g == "" ? "" : $g->attr_price;
     $html = '
                 <div class="am-g am-margin-top">
                     <div class="am-u-md-2 am-u-md-offset-2">
                         <input type="hidden" name="attr_id_list[]" value="' . $a->id . '">
-                        <input type="text" class="am-input-sm" name="attr_value_list[]">
+                        <input type="text" class="am-input-sm" name="attr_value_list[]" value="' . $attr_value . '">
                     </div>
 
 
                     <div class="am-u-md-2">
-                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格">
+                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格"  value="' . $attr_price . '">
                     </div>
                     <div class="am-u-md-2 am-u-end col-end">
                         <button type="button" class="am-btn am-btn-danger am-round trash1">
@@ -145,14 +151,26 @@ function add_input_check($a)
 }
 
 
-
-function build_select_only($a)
+function build_select_only($a, $g = "")
 {
+    $attr_value = $g == "" ? "" : $g->attr_value;
+    $attr_price = $g == "" ? "" : $g->attr_price;
+
     $values = explode("\r\n", $a->value);
 
-    $options = "<option value=''>请选择...</option>";
+    $options = "<option value = '' > 请选择...</option >";
     foreach ($values as $v) {
-        $options .= '<option value="' . $v . '">' . $v . '</option>';
+        if ($g) {
+
+            $options .= '<option value="' . $v . '"';
+
+            if ($attr_value == $v) {
+                $options .= " selected ";
+            }
+            $options .= '>' . $v . '</option>';
+        } else {
+            $options .= '<option value="' . $v . '">' . $v . '</option>';
+        }
     }
     $html = '<div class="am-g am-margin-top">
                     <div class="am-u-sm-4 am-u-md-2 am-text-right">' . $a->name . '</div>
@@ -168,34 +186,54 @@ function build_select_only($a)
     return $html;
 }
 
-function build_select_check($a)
+function build_select_check($a, $g = "",$num = true)
 {
+
+    $attr_value = $g == "" ? "" : $g->attr_value;
+    $attr_price = $g == "" ? "" : $g->attr_price;
 
     $values = explode("\r\n", $a->value);
 
-    $options = "<option value=''>请选择...</option>";
+    $options = "<option value = '' > 请选择...</option >";
     foreach ($values as $v) {
-        $options .= '<option value="' . $v . '">' . $v . '</option>';
+        if ($g) {
+
+            $options .= '<option value="' . $v . '"';
+
+            if ($attr_value == $v) {
+                $options .= " selected ";
+            }
+            $options .= '>' . $v . '</option>';
+        } else {
+            $options .= '<option value="' . $v . '">' . $v . '</option>';
+        }
     }
 
-    $html = '<div class="am-g am-margin-top">
+
+    $html = "";
+
+
+    if ($num) {
+        $html .= '<div class="am-g am-margin-top">
                     <div class="am-u-md-2 am-text-right">' . $a->name . '</div>
                     <div class="am-u-md-10">
-                        <button type="button" class="am-btn am-btn-warning am-round add_attribute" data-id="'.$a->id.'"
+                        <button type="button" class="am-btn am-btn-warning am-round add_attribute" data-id="' . $a->id . '"
                             <span class="am-icon-plus"> 新增</span>
                         </button>
                     </div>
-                </div>
-                <div class="am-g am-margin-top">
+                </div>';
+    }
+
+    $html .= '<div class="am-g am-margin-top">
                     <div class="am-u-md-2 am-u-md-offset-2">
-                        <input type="hidden" name="attr_id_list[]" value="'. $a->id . '">
+                        <input type="hidden" name="attr_id_list[]" value="' . $a->id . '">
                         <select class="att_select" name="attr_value_list[]">
                             ' . $options . '
                         </select>
                     </div>
 
                     <div class="am-u-md-2">
-                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格">
+                        <input type="text" class="am-input-sm money" name="attr_price_list[]" placeholder="属性价格" value="' . $attr_price . '">
                     </div>
                     <div class="am-u-md-2 am-u-end col-end">
                         <button type="button" class="am-btn am-btn-danger am-round trash0">
@@ -208,12 +246,12 @@ function build_select_check($a)
 }
 
 
-function add_select_check($a, $value="")
+function add_select_check($a, $value = "")
 {
 
     $values = explode("\r\n", $a->value);
 
-    $options = "<option value=''>请选择...</option>";
+    $options = " < option value = '' > 请选择...</option > ";
     foreach ($values as $v) {
         $options .= '<option value="' . $v . '">' . $v . '</option>';
     }
@@ -221,7 +259,7 @@ function add_select_check($a, $value="")
     $html = '
                 <div class="am-g am-margin-top">
                     <div class="am-u-md-2 am-u-md-offset-2">
-                        <input type="hidden" name="attr_id_list[]" value="'. $a->id . '">
+                        <input type="hidden" name="attr_id_list[]" value="' . $a->id . '">
                         <select class="att_select" name="attr_value_list[]">
                             ' . $options . '
                         </select>

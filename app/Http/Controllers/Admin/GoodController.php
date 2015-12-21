@@ -62,21 +62,6 @@ class GoodController extends Controller
 
             //调用对应的函数,生成表单
             $form .= call_user_func($function, $a);
-//            //如果是输入类型是input框,分别去生成
-//            if ($a->input_type == 0) {
-//                if ($a->attr_type == 0) {
-//                    $form .= build_input_only($a);
-//                } else {
-//                    $form .= build_input_check($a);
-//                }
-//            } else {
-//                //如果是下拉列表,也分别去生成
-//                if ($a->attr_type == 0) {
-//                    $form .= build_select_only($a);
-//                } else {
-//                    $form .= build_select_check($a);
-//                }
-//            }
         }
         return $form;
     }
@@ -124,7 +109,7 @@ class GoodController extends Controller
         //增加属性
         if ($request->attr_id_list) {
             foreach ($request->attr_id_list as $k => $v) {
-                $good_attr = new Good_attr;
+                $good_attr = new Good_attr();
                 $good_attr->good_id = $good->id;
                 $good_attr->attr_id = $v;
                 $good_attr->attr_value = $request->attr_value_list["$k"];
@@ -152,10 +137,36 @@ class GoodController extends Controller
         $brands = Brand::orderBy('sort_order')->get();
         $categories = $this->get_categories();
         $types = Type::with('attributes')->get();
-        $good = Good::with('good_attrs', 'good_galleries')->find($id);
-//        return $good;
-        return view('admin.good.edit', ['good' => $good, 'brands' => $brands, 'categories' => $categories, 'types' => $types]);
+
+        $good = Good::with('good_attrs.attribute', 'good_galleries')->find($id);
+
+        $build_html = array(
+            'build_input_only' => array(0, 0),
+            'build_input_check' => array(0, 1),
+            'build_select_only' => array(1, 0),
+            'build_select_check' => array(1, 1)
+        );
+
+        $form = "";
+        $attr_id = 0;
+        foreach ($good->good_attrs as $g) {
+
+            $para = array($g->attribute->input_type, $g->attribute->attr_type);
+            $function = array_search($para, $build_html);
+
+            //调用对应的函数,生成表单
+            if ($attr_id != $g->attr_id) {
+                $attr_id = $g->attr_id;
+                $form .= call_user_func($function, $g->attribute, $g);
+            } else {
+                $form .= call_user_func($function, $g->attribute, $g, false);
+            }
+        }
+
+
+        return view('admin.good.edit', ['good' => $good, 'brands' => $brands, 'categories' => $categories, 'form' => $form, 'types' => $types]);
     }
+
 
     public function update(Request $request, $id)
     {

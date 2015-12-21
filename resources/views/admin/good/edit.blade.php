@@ -42,10 +42,12 @@
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">商品分类</div>
                             <div class="am-u-sm-8 am-u-md-4">
-                                <select name="category_id" data-am-selected="{btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360}">
+                                <select name="category_id"
+                                        data-am-selected="{btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360}" >
                                     <option value=''>请选择...</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" @if($good->category_id == $category->id) selected @endif>
+                                        <option value="{{ $category->id }}"
+                                                @if($good->category_id == $category->id) selected @endif>
                                             {!! category_indent($category->count) !!}{{ $category->name }}
                                         </option>
                                     @endforeach
@@ -57,10 +59,12 @@
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">商品品牌</div>
                             <div class="am-u-sm-8 am-u-md-10">
-                                <select data-am-selected="{btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360}" name="brand_id">
+                                <select data-am-selected="{btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360}"
+                                        name="brand_id">
                                     <option value=''>请选择...</option>
                                     @foreach($brands as $brand)
-                                        <option value="{{$brand->id}}" @if($good->brand_id == $brand->id) selected @endif>
+                                        <option value="{{$brand->id}}"
+                                                @if($good->brand_id == $brand->id) selected @endif>
                                             {{$brand->name}}
                                         </option>
                                     @endforeach
@@ -95,7 +99,8 @@
                                 <div class="am-btn-group" data-am-button>
 
                                     <label class="am-btn am-btn-default am-btn-xs @if($good->best == 1) am-active @endif">
-                                        <input type="checkbox" name="best" value="1" @if($good->best == 1) checked @endif>
+                                        <input type="checkbox" name="best" value="1"
+                                               @if($good->best == 1) checked @endif>
                                         精品
                                     </label>
                                     <label class="am-btn am-btn-default am-btn-xs @if($good->new == 1) am-active @endif">
@@ -115,7 +120,8 @@
                             <div class="am-u-sm-8 am-u-md-10">
                                 <div class="am-btn-group">
 
-                                    <input type="checkbox" value="1" name="onsale" @if($good->onsale == 1) checked @endif>
+                                    <input type="checkbox" value="1" name="onsale"
+                                           @if($good->onsale == 1) checked @endif>
                                     选中表示允许销售，否则不允许销售。
                                 </div>
                             </div>
@@ -143,7 +149,8 @@
                                 内容描述
                             </div>
                             <div class="am-u-sm-12 am-u-md-10">
-                                <textarea rows="16" placeholder="请使用富文本编辑插件" id="editor_id" name="desc">{{ $good->desc }}</textarea>
+                                <textarea rows="16" placeholder="请使用富文本编辑插件" id="editor_id"
+                                          name="desc">{{ $good->desc }}</textarea>
                             </div>
                         </div>
 
@@ -154,10 +161,12 @@
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">商品类型</div>
                             <div class="am-u-sm-8 am-u-md-4 am-u-end">
-                                <select data-am-selected="{btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360}" id="select_type" name="type_id">
+                                <select data-am-selected="{btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360}"
+                                        id="select_type" name="type_id">
                                     <option value="" data-type_key="">请选择...</option>
                                     @foreach ($types as $key=>$type)
-                                        <option value="{{ $type->id }}" data-type_key="{{$key}}" @if($good->type_id == $type->id) selected @endif>
+                                        <option value="{{ $type->id }}" data-type_key="{{$key}}"
+                                                @if($good->type_id == $type->id) selected @endif>
                                             {{ $type->name }}
                                         </option>
                                     @endforeach
@@ -165,7 +174,9 @@
                             </div>
                         </div>
 
-                        <div id="attributes"></div>
+                        <div id="attributes">
+                            {!! $form !!}
+                        </div>
 
                     </div>
 
@@ -226,11 +237,12 @@
             window.editor = K.create('#editor_id');
         });
 
-        var good_attrs = {!! $good->good_attrs !!};
-        var types = {!! $types !!};
-        var good_type_id = {!! $good->type_id !!};
+        {{--var good_attrs = {!! $good->good_attrs !!};--}}
+        {{--var types = {!! $types !!};--}}
+        {{--var good_type_id = {!! $good->type_id !!};--}}
     </script>
-    <script src="{{ asset('js/edit_good.js') }}"></script>
+    {{--<script src="{{ asset('js/edit_good.js') }}"></script>--}}
     <script type="text/javascript" src="{{asset('webupload/dist/webuploader.js')}}"></script>
     <script type="text/javascript" src="{{asset('webupload/upload.js')}}"></script>
+    <script src="{{ asset('js/good.js') }}"></script>
 @stop
