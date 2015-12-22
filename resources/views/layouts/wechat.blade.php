@@ -14,23 +14,32 @@
     <link rel="stylesheet" href="{{ asset('amaze/css/app.css') }}"/>
     <link rel='stylesheet' href='{{ asset('NProgress/nprogress.css') }}'/>
     <style>
+        a {
+            color: #7f7f7f;
+        }
+        a:hover {
+            color: #7f7f7f;
+        }
         .am-tabs-d2 .am-tabs-nav > .am-active:after {
-            border-bottom-color: #6f5499;
+            border-bottom-color: #585450;
         }
 
         .am-tabs-d2 .am-tabs-nav > .am-active {
-            border-bottom: 2px solid #6f5499;
+            border-bottom: 2px solid #585450;
         }
 
         .am-navbar-default .am-navbar-nav {
-            background-color: #6f5499;
-            background-image: linear-gradient(to bottom, #563d7c 0, #6f5499 100%);
+            background-color: #585450;
+            background-image: linear-gradient(to bottom, #585450 0, #000 100%);
             background-repeat: repeat-x;
             opacity: .9;
         }
 
         .am-tabs-d2 .am-tabs-nav > .am-active a {
-            color: #563d7c;
+            color: #585450;
+        }
+        .am-badge-secondary {
+            background-color: #c00000;
         }
 
         .flash_img {
@@ -41,8 +50,9 @@
             height: 260px;
         }
 
+        /*焦点图*/
         .am-slider-c1 .am-control-nav li a.am-active {
-            background-color: #6f5499;
+            background-color: #c00000;
         }
 
         [data-am-widget=tabs] {
@@ -52,6 +62,9 @@
         .am-tabs-bd {
             border: 0;
         }
+
+
+
 
     </style>
     @yield('css')
