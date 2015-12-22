@@ -62,7 +62,7 @@
                 @foreach($best_goods as $g)
                     <li>
                         <div class="am-gallery-item">
-                            <a href="{{url('good/{good_id}', $g->id)}}"
+                            <a href="{{url('good', $g->id)}}"
                                class="">
                                 <img src="{{$g->thumb}}"
                                      alt="{{$g->name}}"/>
