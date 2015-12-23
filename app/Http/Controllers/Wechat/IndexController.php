@@ -17,6 +17,9 @@ use Overtrue\Wechat\Payment\Business;
 use Overtrue\Wechat\Payment\UnifiedOrder;
 
 
+use App\Models\Attribute;
+use App\Models\Good_attr;
+
 class IndexController extends Controller
 {
 
@@ -107,9 +110,31 @@ class IndexController extends Controller
     public function good_list($category_id)
     {
         $category = Category::find($category_id);
+        $filter_attr = unserialize($category->filter_attr);
+        //该类型,可以筛选的属性
+        $attributes = Attribute::whereIn("id", $filter_attr)->get();
         $goods = Good::where('onsale', true)->where('category_id', $category_id)->orderBy('created_at', 'desc')->get();
-        return view('wechat.good_list', ['category' => $category, 'goods' => $goods]);
+        return view('wechat.good_list', ['category' => $category, 'goods' => $goods, 'attributes' => $attributes]);
     }
+
+
+    public function filter_attr(Request $request)
+    {
+        $category_id = $request->category_id;
+        $filter_attr = $request->filter_attr;
+
+        $count = count($filter_attr);
+        $good_attr = Good_attr::select('good_id')->whereIn("attr_value", $filter_attr)->groupBy('good_id')->havingRaw("count(*) = $count")->get();
+
+        $good_ids = [];
+        foreach($good_attr as $g) {
+            $good_ids[] = $g->good_id;
+        }
+
+        $goods = Good::with('good_attrs')->where('onsale', true)->whereIn('id', $good_ids)->where('category_id', $category_id)->get();
+        return $goods;
+    }
+
 
     //商品信息
     public function good($good_id)
@@ -179,10 +204,10 @@ class IndexController extends Controller
     public function pay()
     {
         $business = new Business(
-            $this->app_id,							// APP_ID,
-            '13e1c42de4b27e00892faf1f226c3145',		// AppSecret,
-            1230390602,								// 微信支付商户号,
-            '1123325aedfafqr34234123421wqerwq'		// api秘钥
+            $this->app_id,                            // APP_ID,
+            '13e1c42de4b27e00892faf1f226c3145',        // AppSecret,
+            1230390602,                                // 微信支付商户号,
+            '1123325aedfafqr34234123421wqerwq'        // api秘钥
         );
 
 
@@ -191,7 +216,7 @@ class IndexController extends Controller
          */
         $order = new Order();
         $order->body = '长乐商城订单';
-        $order->out_trade_no = md5(uniqid().microtime());
+        $order->out_trade_no = md5(uniqid() . microtime());
         $order->total_fee = '100';    // 单位为 “分”, 字符串类型
         $order->openid = session()->get('user')->openid;
 
@@ -209,12 +234,13 @@ class IndexController extends Controller
         return view('wechat.pay')->with('config', $payment->getConfig());
     }
 
-    public function notify(){
+    public function notify()
+    {
         $notify = new Notify(
-            $this->app_id,							// APP_ID,
-            '13e1c42de4b27e00892faf1f226c3145',		// AppSecret,
-            1230390602,								// 微信支付商户号,
-            '1123325aedfafqr34234123421wqerwq'		// api秘钥
+            $this->app_id,                            // APP_ID,
+            '13e1c42de4b27e00892faf1f226c3145',        // AppSecret,
+            1230390602,                                // 微信支付商户号,
+            '1123325aedfafqr34234123421wqerwq'        // api秘钥
         );
 
         $transaction = $notify->verify();

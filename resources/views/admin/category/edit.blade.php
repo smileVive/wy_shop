@@ -248,7 +248,9 @@
             } else {
                 var attributes = types[type_key].attributes;
                 $.each(attributes, function (k, v) {
-                    html += '<option value="' + v.id + '">' + v.name + '</option>';
+                    if (v.input_type != 0) {
+                        html += '<option value="' + v.id + '">' + v.name + '</option>';
+                    }
                 })
                 $attributes.html(html);
             }

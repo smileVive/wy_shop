@@ -155,9 +155,9 @@
                         '<select class="type">' +
                         '<option value="-1">请选择商品类型</option>' +
                         @foreach ($types as $k=>$type)
-                            '<option value="{{ $k }}">{{ $type->name }}</option>' +
+                                '<option value="{{ $k }}">{{ $type->name }}</option>' +
                         @endforeach
-                        '</select>' +
+                                '</select>' +
                         '</div>' +
                         '<div class="am-u-md-3">' +
                         '<select class="attributes" name="filter_attr[]">' +
@@ -190,19 +190,19 @@
             });
 
             //删除筛选
-            $(".trash0").click(function(){
+            $(".trash0").click(function () {
                 var $attributes = $(this).parents('.filter').find('.attributes');
                 $attributes.empty();
                 $(".select0 option:first").attr('selected', true);
             });
-            $(document).on("click", ".trash", function() {
+            $(document).on("click", ".trash", function () {
                 $(this).parents(".filter").remove();
             });
 
             //筛选属性
             var types = {!! $types !!};
 //            console.log(types);
-            $(document).on("change", ".type",function(){
+            $(document).on("change", ".type", function () {
                 var html = '';
                 var type_key = $(this).val();
                 var $attributes = $(this).parents('.filter').find('.attributes');
@@ -212,7 +212,9 @@
                 } else {
                     var attributes = types[type_key].attributes;
                     $.each(attributes, function (k, v) {
-                        html += '<option value="' + v.id + '">' + v.name + '</option>';
+                        if (v.input_type != 0) {
+                            html += '<option value="' + v.id + '">' + v.name + '</option>';
+                        }
                     })
                     $attributes.html(html);
                 }
