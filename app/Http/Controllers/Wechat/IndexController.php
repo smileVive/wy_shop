@@ -125,7 +125,9 @@ class IndexController extends Controller
         $filter_attr = $request->filter_attr;
 
         $count = count($filter_attr);
+
         //取得所有符合筛选属性的商品id
+        //select good_id from good_attrs where attr_value in ('windows', '8G') GROUP BY good_id having count(*) = 2;
         $good_attr = Good_attr::select('good_id')->whereIn("attr_value", $filter_attr)->groupBy('good_id')->havingRaw("count(*) = $count")->get();
 
         //重新处理数组,只取good_id,存入$good_ids数组;
