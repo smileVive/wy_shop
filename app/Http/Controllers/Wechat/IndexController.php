@@ -125,14 +125,22 @@ class IndexController extends Controller
         $filter_attr = $request->filter_attr;
 
         $count = count($filter_attr);
+        //取得所有符合筛选属性的商品id
         $good_attr = Good_attr::select('good_id')->whereIn("attr_value", $filter_attr)->groupBy('good_id')->havingRaw("count(*) = $count")->get();
 
+        //重新处理数组,只取good_id,存入$good_ids数组;
         $good_ids = [];
         foreach($good_attr as $g) {
             $good_ids[] = $g->good_id;
         }
 
-        $goods = Good::with('good_attrs')->where('onsale', true)->whereIn('id', $good_ids)->where('category_id', $category_id)->get();
+        //判断是否选择了筛选属性
+        if($good_ids == []){
+            $goods = Good::with('good_attrs')->where('onsale', true)->where('category_id', $category_id)->get();
+        } else {
+            $goods = Good::with('good_attrs')->where('onsale', true)->whereIn('id', $good_ids)->where('category_id', $category_id)->get();
+        }
+
         return $goods;
     }
 
