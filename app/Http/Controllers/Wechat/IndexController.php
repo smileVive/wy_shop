@@ -118,6 +118,7 @@ class IndexController extends Controller
     }
 
 
+    //商品筛选
     public function filter_attr(Request $request)
     {
         $category_id = $request->category_id;

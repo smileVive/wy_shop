@@ -28,8 +28,12 @@
 
                         @foreach ($attributes as $attr)
                             <li class="am-parent">
-                                <a href="##" class="">{{$attr->name}} <span style="color: #c00000"></span></a>
+                                <a href="##" class="">{{$attr->name}} <span
+                                            style="color: #c00000;float:right;margin-right:32px;">不限</span></a>
                                 <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
+                                    <li class="">
+                                        <a href="javascript: void 0;" class="filter_value">不限</a>
+                                    </li>
                                     @foreach(explode("\r\n", $attr->value) as $value)
                                         <li class="">
                                             <a href="javascript: void 0;" class="filter_value">{{$value}}</a>
@@ -104,12 +108,12 @@
             $(".filter_attr span").text("");
         })
 
-        $(".go-filter").click(function(){
+        $(".go-filter").click(function () {
             var info = {};
             var filter_attr = [];
-            $(".filter_attr span").each(function(){
+            $(".filter_attr span").each(function () {
                 var attr_value = $(this).text()
-                if(attr_value != "") {
+                if (attr_value != "不限") {
                     filter_attr.push(attr_value);
                 }
             })
@@ -120,9 +124,9 @@
             $.ajax({
                 type: "GET",
                 data: info,
-                url: "/category/"+info.categry_id+"/filter_attr",
+                url: "/category/" + info.categry_id + "/filter_attr",
                 dataType: "json",
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
                 }
 
