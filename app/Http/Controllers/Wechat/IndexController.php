@@ -150,8 +150,28 @@ class IndexController extends Controller
     //商品信息
     public function good($good_id)
     {
-        $good = Good::with('good_galleries', 'comments.user')->find($good_id);
-        return view('wechat.good', ['good' => $good]);
+        $good = Good::with('good_attrs.attribute','good_galleries', 'comments.user')->find($good_id);
+
+
+        //重新生成所有属性的数组
+        $attrs = $good->good_attrs;
+        $attr_id = 0;
+        $key = 0;
+        $attributes = [];
+        foreach($attrs as $k=>$v) {
+            if($v->attr_id != $attr_id) {
+                $attr_id = $v->attr_id;
+                $key = $k;
+                $attributes["$k"]['name'] = $v->attribute->name;
+                $attributes["$k"]['attr_value'][] = $v->attr_value;;
+                $attributes["$k"]['attr_price'][] = $v->attr_price;
+            } else {
+                $attributes["$key"]['attr_value'][] = $v->attr_value;
+                $attributes["$key"]['attr_price'][] = $v->attr_price;
+            }
+        }
+
+        return view('wechat.good', ['good' => $good, 'attributes'=>$attributes]);
     }
 
     //添加商品到购物车

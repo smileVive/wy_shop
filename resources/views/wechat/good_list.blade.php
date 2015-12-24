@@ -105,7 +105,7 @@
         })
 
         $(".clear-filter").click(function () {
-            $(".filter_attr span").text("");
+            $(".filter_attr span").text("不限");
         })
 
         $(".go-filter").click(function () {

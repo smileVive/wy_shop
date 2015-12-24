@@ -120,6 +120,23 @@
                     </h2>
                 </div>
 
+
+                @foreach ($attributes as $attr)
+                    <div data-am-widget="titlebar" class="am-titlebar am-titlebar-multi">
+                        <h2 class="am-titlebar-title">
+                            {{$attr['name']}}：
+                            <div class="am-btn-group">
+                                @foreach ($attr['attr_value'] as $k=>$v)
+                                    <button type="button" class="am-btn am-btn-primary am-radius" data-price="{{$attr['attr_price'][$k]}}">
+                                        {{$v}}
+                                    </button>
+                                @endforeach
+                            </div>
+                        </h2>
+                    </div>
+                @endforeach
+
+
                 <div data-am-widget="titlebar" class="am-titlebar am-titlebar-multi">
                     <h2 class="am-titlebar-title">
 
@@ -137,7 +154,8 @@
 
                 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
                 <div style="padding:0 10px 10px;">
-                    <button type="button" class="am-btn am-btn-lg am-btn-success am-radius am-btn-block" id="add_cart">
+                    <button type="button" class="am-btn am-btn-lg am-btn-success am-radius am-btn-block"
+                            id="add_cart">
                         <i class="am-icon-shopping-cart"></i>
                         加入购物车
                     </button>
