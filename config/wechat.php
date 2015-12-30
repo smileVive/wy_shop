@@ -1,8 +1,8 @@
 <?php
 return [
     'use_alias'    => false,
-    'app_id'       => 'wx4e19e04fe3d75959',
-    'secret'       => '13e1c42de4b27e00892faf1f226c3145',
-    'token'        => 'whphp',
-    'encoding_key' => '9JetIIM4eoluQS1xEFQCn9sKqJIh3iuI4IT3lRZFM13'
+    'app_id'       => 'wx88570bde820a62ba',
+    'secret'       => 'e8f6ec6a2fee7c5a851a26a5041e5fa3',
+    'token'        => 'wechat',
+    'encoding_key' => ''
 ];
