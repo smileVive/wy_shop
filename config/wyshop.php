@@ -19,5 +19,6 @@ return [
         'yuantong'=>'圆通快递',
         'yunda' => '韵达快递',
         'zhongtong' => '中通快递'
-    )
+    ),
+    'debug' => 0
 ];

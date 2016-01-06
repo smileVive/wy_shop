@@ -26,6 +26,7 @@ class WechatController extends Controller
     //获取菜单
     public function get_menu()
     {
+
         $menus = Cache::rememberForever('wyshop_admin_wechat_menus', function () {
             $menu = new Menu($this->app_id, $this->secret);
             return $menu->get();

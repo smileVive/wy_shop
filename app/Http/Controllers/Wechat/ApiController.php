@@ -15,11 +15,13 @@ class ApiController extends Controller
      */
     public function serve(Server $server)
     {
+
+
         // $server->on('event', 'subscribe', function($event){
 // 			return Message::make('text')->content('您好！欢迎关注 长乐未央');
 // 		});
 
-        //点击事件回复
+//        //点击事件回复
         $server->on('event', function ($event) {
             switch ($event->Event) {
                 case 'subscribe':
@@ -36,6 +38,9 @@ class ApiController extends Controller
                         case 'new':
                             return $this->new_goods();
                             break;
+//                        case 'order':
+//                            return $this->order_list();
+//                            break;
                         case 'help':
                             return $this->help();
                             break;
@@ -47,21 +52,21 @@ class ApiController extends Controller
             }
 
         });
-
-        //语音回复
+//
+//        //语音回复
         $server->on('message', 'voice', function ($message) {
             switch ($message->Recognition) {
                 //人气商品
-                case '人气商品！':
+                case '人气！':
                     return $this->best();
                     break;
 
                 //热门商品
-                case '热门商品！':
+                case '热门！':
                     return $this->hot();
                     break;
 
-                case '最新商品！':
+                case '最新！':
                     return $this->new_goods();
                     break;
 
@@ -74,20 +79,20 @@ class ApiController extends Controller
                     break;
             }
         });
-
-        //文字回复
+//
+//        //文字回复
         $server->on('message', 'text', function ($message) {
             switch ($message->Content) {
-                case 'best':
+                case '人气':
                     return $this->best();
                     break;
-                case 'hot':
+                case '热门':
                     return $this->hot();
                     break;
-                case 'new':
+                case '最新':
                     return $this->new_goods();
                     break;
-                case 'help':
+                case '帮助':
                     return $this->help();
                     break;
                 default:
@@ -146,7 +151,7 @@ class ApiController extends Controller
 
     private function help()
     {
-        $msg = "回复best，显示人气商品\n回复new，显示最新商品\n回复hot，显示热门商品";
+        $msg = "回复[人气]，显示人气商品\n回复[最新]，显示最新商品\n回复[热门]，显示热门商品";
         return Message::make('text')->content($msg);
     }
 

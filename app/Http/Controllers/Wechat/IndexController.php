@@ -33,8 +33,13 @@ class IndexController extends Controller
         $this->secret = config('wechat.secret');
 
 
-//        $this->check_login();
-        session()->put('user', \App\Models\User::find(8));
+        if (config("wyshop.debug")) {
+            session()->put('user', \App\Models\User::find(8));
+        } else {
+            $this->check_login();
+        }
+
+
         $this->user = session()->get('user');
         //初始化用户购物车的数量
         view()->share(['cart_number' => $this->cart_number()]);
@@ -132,12 +137,12 @@ class IndexController extends Controller
 
         //重新处理数组,只取good_id,存入$good_ids数组;
         $good_ids = [];
-        foreach($good_attr as $g) {
+        foreach ($good_attr as $g) {
             $good_ids[] = $g->good_id;
         }
 
         //判断是否选择了筛选属性
-        if($good_ids == []){
+        if ($good_ids == []) {
             $goods = Good::with('good_attrs')->where('onsale', true)->where('category_id', $category_id)->get();
         } else {
             $goods = Good::with('good_attrs')->where('onsale', true)->whereIn('id', $good_ids)->where('category_id', $category_id)->get();
@@ -150,7 +155,7 @@ class IndexController extends Controller
     //商品信息
     public function good($good_id)
     {
-        $good = Good::with('good_attrs.attribute','good_galleries', 'comments.user')->find($good_id);
+        $good = Good::with('good_attrs.attribute', 'good_galleries', 'comments.user')->find($good_id);
 
 
         //重新生成所有属性的数组
@@ -158,8 +163,8 @@ class IndexController extends Controller
         $attr_id = 0;
         $key = 0;
         $attributes = [];
-        foreach($attrs as $k=>$v) {
-            if($v->attr_id != $attr_id) {
+        foreach ($attrs as $k => $v) {
+            if ($v->attr_id != $attr_id) {
                 $attr_id = $v->attr_id;
                 $key = $k;
                 $attributes["$k"]['name'] = $v->attribute->name;
@@ -171,7 +176,7 @@ class IndexController extends Controller
             }
         }
 
-        return view('wechat.good', ['good' => $good, 'attributes'=>$attributes]);
+        return view('wechat.good', ['good' => $good, 'attributes' => $attributes]);
     }
 
     //添加商品到购物车
